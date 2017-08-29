@@ -1,0 +1,72 @@
+/* 玩家登陆相关 */
+/*  位数为基数表示为前端到后端的协议*/
+
+
+// [ID=1000,ROUTE={role, role_server}]
+message  c2s_auth_key{
+    required string                 uid                         =1;//账号名或前端通过SDK生成的唯一标识
+    required string                 key                         =2;//认证key，从认证服务器生成
+    required string                 front_version               =3;//前端版本号
+    required int32                  agent_id                    =4;//代理ID
+    required int32                  server_id                   =5;//区服ID
+    required int32                  platform                    =6;//平台ID，需要前端读取配置转换成ID而不是字符串
+    required int32                  is_reconnect                =7;//是否是断线重连：0不是,1是
+    required string                 imei                        =8;//手机的IMEI码，苹果设备获取的不是真正的IMEI只是一个唯一标识
+    required string                 device                      =9;//设备名
+    required string                 phone_system                =10;//手机操作系统
+    required string                 session_id                  =11;//某些平台(eg. UC)是用SessionID登录的
+    required string                 time                        =12;//前端登录的时间戳
+}
+// [ID=1001,ROUTE={role, role_server}]
+message s2c_auth_key{
+    required string                 apk_version                 =1;//apk版本号，apk, client_svnlog_num
+    required int32                  queue_num                   =2;//登录排队人数
+    required int32                  create_role                 =3;//1需要创建帐号 2需要验证码 默认0正常
+    optional double                 server_time                 =4;//服务器的当前时间，秒
+    optional p_role_base             role_base                   =5;//战队基本信息
+    optional int32                  sum_pay                     =7;//总充值
+    required int32                  code_register               =9;//注册码注册:0不是，1是
+    required int32                  send_enter_tag              =10;//是否发送role_enter_tos：0发，1不发
+}
+
+// 玩家基本信息
+// [ID=1002]
+message p_role_base{
+    required double                 player_id                =1;
+    required string                 player_name              =2;
+    required string                 account_name             =3;
+    required int32                  head                     =4;
+    required int32                  model                    =5; //模型
+    required int32                  level                    =6;
+    required int32                  exp                      =7;
+    required int32                  agent_id                 =8;
+    required int32                  server_id                =9;
+    required int32                  platform                 =10;
+    required int32                  create_time              =11;
+    required int32                  last_offline_time        =13;      // 上次下线的时间戳
+}
+
+// 键值对
+// [ID=1003}]
+message p_kv{
+    required int32                  key                       =1;
+    required int32                  value                     =2;
+}
+
+//PING
+// [ID=1004}]
+message c2s_heart_beat{
+    required int32                  ping                       =1;
+}
+
+//PONG
+// [ID=1005}]
+message s2c_heart_beat{
+    required int32                  pong                       =1;
+}
+
+// [ID=1006}]
+message c2s_re_connect{
+    required int32                  pong                       =1;
+}
+

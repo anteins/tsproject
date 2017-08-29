@@ -1,0 +1,35 @@
+// demopb.proto
+package game.demopb;
+syntax = "proto3";
+
+message AwesomeMessage {
+    //物品的数量.
+    required int32 num = 1;
+
+    required string awesome_field = 2; // becomes awesomeField
+}
+
+//技能升级的反馈数据.
+message SkillRankupItemData
+{
+    //物品的tid.
+    required sint64 id = 1;
+
+    //物品的数量.
+    required int32 num = 2[default=-1];
+}
+
+
+//升级技能.
+message SkillRankupRequest {
+    required sint64 fighterId = 1;
+    required sint64 skillId = 2;
+    repeated SkillRankupItemData items = 3;
+}
+
+message SkillRankupResponse {
+    //本次获得的熟练度.
+    optional int32 addedexp = 1[default=-1];
+    //技能已经升级到的熟练度.
+    optional int32 skillexp = 2[default=-1];
+}

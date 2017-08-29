@@ -1,0 +1,12 @@
+// login.proto
+
+message LoginMessage {
+    required bool is_relogin = 1;
+    required string user_id = 2;
+    required string token = 3;
+    required string channel = 4;
+    required string sub_channel = 5;
+    required string time = 6;
+    required string os = 7;
+    required int32 cpu_num = 8;
+}
