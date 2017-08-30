@@ -13,14 +13,14 @@ module EIGame{
             return this.mInstance;
         }
 
-        private eiSocket:SocketServer;
-        private intervalList:Array<number>;
-        net_endian = Laya.Byte.BIG_ENDIAN;
-        over = false;
-        _time = 0;
-        connectTime;
+        private eiSocket:WSConnection;
         private mIsOnline:boolean = true;
         private activeToClose:boolean = false;
+        private _time:number = 0;
+        private connectTimeOut;
+
+        net_endian = Laya.Byte.BIG_ENDIAN;
+        
 
         constructor(){
             super();
@@ -28,7 +28,6 @@ module EIGame{
 
         init(){
             var self = this;
-            self.intervalList = new Array<number>();
             self.activeToClose = false;
             NetworkUtil.addHandler(window, "online", function() {
                 console.log("Online---正常工作");
@@ -46,21 +45,17 @@ module EIGame{
 
         initConnect():void{
             var self = this;
-            self.eiSocket = SocketServer.Instance();
-            self.eiSocket.initConnect(LoginManager.Instance().socket_url);
+            self.eiSocket = new WSConnection();
+            self.eiSocket.init();
+            self.eiSocket.connectByUrl(LoginManager.Instance().socket_url);
         }
 
         closeConnect(error:any=null):void{
             let self = this;
             if(self.eiSocket){
                 self.activeToClose = true;
-                ei_reconnect.Instance().break();
-                self.eiSocket.closeConnect();
+                self.eiSocket.close();
             }
-        }
-
-        close(){
-            this.closeConnect();
         }
 
         //---------------------------------------------- ws回调 -------------------------------------------
@@ -69,7 +64,7 @@ module EIGame{
         }
 
         onSocketConnected(e:any=null):void{
-            console.log("[network] onConnected");
+            // console.log("[network] onConnected");
             let self = this;
             this.resetConnectTime();
             this.startConnecteTime();
@@ -78,20 +73,19 @@ module EIGame{
                 return;
             }
             ei_reconnect.Instance().init();
-            HeartCell.Instance().init();
+            HeartBeatManager.Instance().init();
             Reachability.Instance().AddListener();
-            var id:number = setInterval(()=>{
+            setInterval(()=>{
                 self.checkNetState();
             }, 1000);
-            this.intervalList.push(id);
         }
         
         onSocketClose(e:any=null):void{
-            ei_reconnect.Instance().onConnectingWarning("on Socket Close", e);
+            ei_reconnect.Instance().onConnectingException("on Socket Close", e);
         }
 
         onSocketError(e:Event=null):void{
-            ei_reconnect.Instance().onConnectingWarning("on Socket Error", e);
+            ei_reconnect.Instance().onConnectingException("on Socket Error", e);
         }
 
         //---------------------------------------------- ws回调 -------------------------------------------
@@ -110,37 +104,34 @@ module EIGame{
         getSocket(){
             return this.eiSocket;
         }
+
+        reConnect(url:string):void{
+            if(this.eiSocket){
+                this.eiSocket.reConnect(url);
+            }
+        }
         
-        ClosedConnectFinall(){
+        clearConnect(){
             console.log("[network] 重连结束.....清理连接");
             var self = this;
-            self.over = true;
-            HeartCell.Instance().close();
+            HeartBeatManager.Instance().close();
             Reachability.Instance().RemoveListener();
-            for(var id of self.intervalList){
-                clearInterval(id);
-            }
-            self.intervalList.length = 0;
         }
         
         resetConnectTime(){
             this._time = 0;
-            if(this.connectTime){
-                clearTimeout(this.connectTime);
+            if(this.connectTimeOut){
+                clearTimeout(this.connectTimeOut);
             }
         }
 
         startConnecteTime() {
             var self = this;
-            this.connectTime = setTimeout(()=> {
+            this.connectTimeOut = setTimeout(()=> {
                 self._time++;
                 self.startConnecteTime();
             }, 1000);
         };
-
-        after_connected(second){
-            return this._time >= second;
-        }
 
         checkNetState(){
             // NetworkUtil.isOnLine();
@@ -148,8 +139,6 @@ module EIGame{
         }
 
         say_ai(){
-            if(this.over)
-                return;
             if(this.connected()){
                 var req = LoginMainDlgUI.Instance().sendLoginServer(0);
             }
@@ -159,8 +148,10 @@ module EIGame{
             let self = this;
             let byte = new Laya.Byte();
             byte.endian = self.net_endian;
-            byte.writeInt32(protoId);//4字节 协议ID
-            byte.writeArrayBuffer(buf);//pb消息
+            //4字节 协议ID
+            byte.writeInt32(protoId);
+            //pb消息流
+            byte.writeArrayBuffer(buf);
             // console.log("[network] pack ", buf.length, buf);
             return byte.getUint8Array(0, buf.length + 4);
         }
@@ -197,13 +188,6 @@ module EIGame{
             return [protoId, datas];
         }
 
-        public sendMessage(msg:any){
-            var self = this;
-            if(self.connected()){
-                self.eiSocket.sendMessage(msg);
-            }
-        }
-
         public sendPacket(protoId:any, buf:Uint8Array){
             var self = this;
             if(!self.connected()){
@@ -211,9 +195,9 @@ module EIGame{
                 return;
             }
             var buffer:Uint8Array = self.pack(protoId, buf);
-            let log = new Laya.Byte(buffer);
-            // console.log("[network] sendPacket ", protoId, PROTOCOL_ID[protoId], log);  
-            self.eiSocket.sendPacket(buffer);
+            // let log = new Laya.Byte(buffer);
+            // console.log("[network] sendPacket ", protoId, excutePacket.Instance().get_msg(protoId), log);  
+            self.eiSocket.send(buffer);
         }
         
         public excutePacketEx(message:ArrayBuffer):void {
@@ -225,23 +209,23 @@ module EIGame{
         };
 
         public excutePakcetHeader(message:ArrayBuffer){
-            let unpack_struct = null;
+            let unpack_t = null;
             try{
-                unpack_struct = this.unpack(message);
+                unpack_t = this.unpack(message);
             }catch(e){
                 console.log("[Error] 协议ID解析", e);
             }
             
-            let[protoId, datas] = unpack_struct;
+            let[protoId, datas] = unpack_t;
             protoId = protoId as number;
             datas = datas as Uint8Array;
             //下行入口
-            if(protoId == null || PROTOCOL_ID[protoId] == null){
+            if(protoId == null || ExcutePacketRoute.Instance().get_msg(protoId) == null){
                 throw Error("[Error] 缺少协议ID信息 " + protoId);
             }
             let log = new Laya.Byte(message);
-            // console.log("[network] excutePacket ", protoId, PROTOCOL_ID[protoId], log);
-            excuteProtocol.Instance().route(protoId, datas);
+            // console.log("[network] excutePacket ", protoId, excutePacket.Instance().get_msg(protoId), log);
+            ExcutePacketRoute.Instance().route(protoId, datas);
         }
 
         public packetInt(){

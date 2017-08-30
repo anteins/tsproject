@@ -2,7 +2,6 @@ module EIGame{
     export class GameManager{
         private mGame:EIGame.Game;
         private static mInstace:EIGame.GameManager;
-        private loopRate = 1000;
 
         public static Instance(){
             if(this.mInstace == null){

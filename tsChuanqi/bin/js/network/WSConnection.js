@@ -1,21 +1,19 @@
 var EIGame;
 (function (EIGame) {
-    var SocketServer = (function () {
-        function SocketServer() {
+    var WSConnection = (function () {
+        function WSConnection() {
         }
-        SocketServer.Instance = function () {
-            if (this.mInstace == null) {
-                this.mInstace = new SocketServer();
+        WSConnection.prototype.connect = function (host, port) {
+            if (this.ws) {
+                this.ws.connect(host, port);
             }
-            return this.mInstace;
         };
-        SocketServer.prototype.initConnect = function (url) {
+        WSConnection.prototype.init = function () {
             if (this.ws)
                 return;
             this.ws = new Laya.Socket();
             this.byte = new Laya.Byte();
             this.ws.endian = EIGame.ei_network.Instance().net_endian;
-            this.ws.connectByUrl(url);
             this.output = this.ws.output;
             this.ws.on(Laya.Event.OPEN, this, function (e) {
                 if (e === void 0) { e = null; }
@@ -38,7 +36,12 @@ var EIGame;
                 EIGame.ei_network.Instance().onSocketError(e);
             });
         };
-        SocketServer.prototype.reConnect = function (url) {
+        WSConnection.prototype.connectByUrl = function (url) {
+            if (this.ws) {
+                this.ws.connectByUrl(url);
+            }
+        };
+        WSConnection.prototype.reConnect = function (url) {
             try {
                 if (this.ws && url) {
                     this.ws.connectByUrl(url);
@@ -48,32 +51,27 @@ var EIGame;
                 console.log("[socket] 重连Error ", err);
             }
         };
-        SocketServer.prototype.connected = function () {
+        WSConnection.prototype.connected = function () {
             if (this.ws) {
                 return this.ws.connected;
             }
             return false;
         };
-        SocketServer.prototype.closeConnect = function () {
+        WSConnection.prototype.close = function () {
             if (this.ws) {
                 // console.log("[socket] close ");
                 this.ws.cleanSocket();
                 this.ws.close();
             }
         };
-        SocketServer.prototype.sendMessage = function (msg) {
-            if (this.ws) {
-                this.ws.send(msg);
-            }
-        };
-        SocketServer.prototype.sendPacket = function (buffer) {
+        WSConnection.prototype.send = function (buffer) {
             if (this.ws) {
                 this.ws.send(buffer);
                 // console.log("[socket] send ", buffer);
             }
         };
-        return SocketServer;
+        return WSConnection;
     }());
-    EIGame.SocketServer = SocketServer;
+    EIGame.WSConnection = WSConnection;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=SocketServer.js.map
+//# sourceMappingURL=WSConnection.js.map

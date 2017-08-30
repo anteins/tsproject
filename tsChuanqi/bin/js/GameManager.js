@@ -2,7 +2,6 @@ var EIGame;
 (function (EIGame) {
     var GameManager = (function () {
         function GameManager() {
-            this.loopRate = 1000;
         }
         GameManager.Instance = function () {
             if (this.mInstace == null) {

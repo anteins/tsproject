@@ -1,34 +1,31 @@
 module EIGame{
-    export class SocketServer{
-        private static mInstace:SocketServer;
+    export class WSConnection{
         private ws:Laya.Socket;
         private byte;
         private output;
 
         constructor(){}
 
-        public static Instance(){
-            if(this.mInstace == null){
-                this.mInstace = new SocketServer();
+        public connect(host: string, port: number):void{
+            if(this.ws){
+                this.ws.connect(host, port);
             }
-            return this.mInstace;
         }
 
-        public initConnect(url:string){
+        public init(){
             if(this.ws)
                 return;
             this.ws = new Laya.Socket();
             this.byte = new Laya.Byte();
             this.ws.endian = ei_network.Instance().net_endian;
-            this.ws.connectByUrl(url);
             this.output = this.ws.output;
 
             this.ws.on(Laya.Event.OPEN, this, (e:Event=null)=>{
-                console.log("[socket] onOpen ", e);
+                // console.log("[socket] onOpen ", e);
                 ei_network.Instance().onSocketConnected(e);
             });
             this.ws.on(Laya.Event.CLOSE, this, (e:CloseEvent=null)=>{
-                console.log("[socket] onClosed ", e);
+                // console.log("[socket] onClosed ", e);
                 ei_network.Instance().onSocketClose(e);
             });
             this.ws.on(Laya.Event.MESSAGE, this, (message:any=null)=>{
@@ -36,9 +33,15 @@ module EIGame{
                 ei_network.Instance().onSocketMessage(message);
             });
             this.ws.on(Laya.Event.ERROR, this, (e:Event=null)=>{
-                console.log("[socket] error ", e);
+                // console.log("[socket] error ", e);
                 ei_network.Instance().onSocketError(e);
             });
+        }
+
+        public connectByUrl(url:string):void{
+            if(this.ws){
+                this.ws.connectByUrl(url);
+            }
         }
 
         public reConnect(url:string){
@@ -49,7 +52,6 @@ module EIGame{
             }catch(err){
                 console.log("[socket] 重连Error ", err);
             }
-           
         }
 
         connected():boolean{
@@ -59,7 +61,7 @@ module EIGame{
             return false;
         }
 
-        public closeConnect():void{
+        public close():void{
             if(this.ws){
                 // console.log("[socket] close ");
                 this.ws.cleanSocket();
@@ -67,13 +69,7 @@ module EIGame{
             }
         }
 
-        public sendMessage(msg:any){
-            if(this.ws){
-                this.ws.send(msg);
-            }
-        }
-
-        public sendPacket(buffer:Uint8Array):void{
+        public send(buffer:Uint8Array):void{
             if(this.ws){
                 this.ws.send(buffer);
                 // console.log("[socket] send ", buffer);

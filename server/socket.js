@@ -14,7 +14,10 @@ var http = require("http"),
 var bodyParser = require('body-parser');
 var multer = require('multer'); 
 // Initialize from .proto file
-var builder = ProtoBuf.loadProtoFile("../tsChuanqi/src/network/message/pb.proto")
+var mRoot = null;
+var builder = ProtoBuf.load("../tsChuanqi/src/network/message/pb.proto", function(err, root){
+    mRoot = root;
+})
 
 var app = express();   
 app.use(bodyParser.json()); // for parsing application/json
@@ -53,8 +56,8 @@ var PROTOCOL_ID = {
 }
 
 ltestconfig = {
-    "no_pong":false,
-    "disconnect_after_sec":8,
+    "no_pong":true,
+    "disconnect_after_sec":5,
     "reconnect_after_sec":10,
 }
 
@@ -62,7 +65,6 @@ wss = new WebSocketServer({port:8181});
 wss.on('connection', function (ws) {
     connectionList.push(ws);
     console.log(">new player ~")
-
     if(ltestconfig["disconnect_after_sec"] > 0){
         setTimeout(function(){
             console.log("主动关闭通信");
@@ -106,7 +108,7 @@ wss.on('connection', function (ws) {
 	ws.on('message', function (message) {
 		console.log("----------------------------------------------")
         var [protoId, pbdatas] = unpack(message);
-        console.log("onMessage ", protoId, pbdatas);
+        // console.log("onMessage ", protoId, pbdatas);
 
         if(protoId == 1004){
             //心跳
@@ -117,16 +119,7 @@ wss.on('connection', function (ws) {
             // console.log("sendPong ", req);
             ws.send(req);
         }else{
-            // var msg = pbencode(1001, {
-            //     apk_version:"v1.2",
-            //     queue_num:1,
-            //     create_role:1,
-            //     server_time:1.5,
-            //     role_base:1,
-            //     sum_pay:1,
-            //     code_register:1,
-            //     send_enter_tag:1,
-            // });
+     
             var msg = pbencode(1006, {
                 pong:3,
             });
@@ -146,15 +139,30 @@ wss.on('headers', function (headers, request) {
 });
 
 var pbdecode = function(protoId, pbdatas){
-    var Message = builder.build(PROTOCOL_ID[protoId]);
-    var msg = Message.decode(pbdatas);
-    return msg;
+    if(mRoot == null)
+        throw Error("mRoot is null.");
+    let pbMessage = mRoot.lookup(PROTOCOL_ID[protoId]);
+    if(!pbMessage){
+        throw Error("no this message '" + PROTOCOL_ID[protoId] + "'");
+    }
+    pb = pbMessage.decode(pbdatas);
+    // var Message = builder.build(PROTOCOL_ID[protoId]);
+    // var msg = Message.decode(pbdatas);
+    return pb;
 }
 
 var pbencode = function(protoId, data){
-    var Message = builder.build(PROTOCOL_ID[protoId]);
-    var msg = new Message(data).encode();
-    return msg;
+    if(mRoot == null)
+        throw Error("mRoot is null.");
+    let Message = mRoot.lookup(PROTOCOL_ID[protoId]);
+    let msg = Message.create(data);
+    let errMsg = Message.verify(msg);
+    if (errMsg)
+        throw Error("message verify: " + errMsg);
+    let buffer = Message.encode(msg).finish();
+    // var Message = builder.build(PROTOCOL_ID[protoId]);
+    // var msg = new Message(data).encode();
+    return buffer;
 }
 var toUint8Array = function(sData){
     var datas = sData;
@@ -172,7 +180,7 @@ var unpack = function(bytes){
 var pack = function(protoId, pbbuf){
     var idbuf = new ByteBuffer(4);
     idbuf.writeInt32(protoId);
-    var newbuf = Buffer.concat([idbuf.buffer, pbbuf.buffer]);
+    var newbuf = Buffer.concat([idbuf.buffer, pbbuf]);
     return newbuf;
 }
 

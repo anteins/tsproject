@@ -78,10 +78,10 @@ var EIGame;
                 "os": "123456",
                 "cpu_num": 6,
             };
-            // excuteProtocol.Instance().sendLoginServer();
+            // ExcutePacketRoute.Instance().sendLoginServer();
         };
         Test.httpTest = function () {
-            var p_role_base = EIGame.pbManager.Instance().getRoot().lookup("p_role_base").create({
+            var p_role_base = EIGame.ProtocolManager.Instance().getRoot().lookup("p_role_base").create({
                 playerId: 1001.0,
                 playerName: "nihao",
                 accountName: "hello",
@@ -95,7 +95,7 @@ var EIGame;
                 createTime: 39399393,
                 lastOfflineTime: 1111
             });
-            var pb_buffer = EIGame.pbManager.Instance().encodeMsg(1001, {
+            var pb_buffer = EIGame.ProtocolManager.Instance().encodeMsg(1001, {
                 apkVersion: "v1.1",
                 queueNum: 100,
                 createRole: 199,
@@ -105,7 +105,7 @@ var EIGame;
                 codeRegister: 11911,
                 sendEnterTag: 1111,
             });
-            var pb_msg = EIGame.pbManager.Instance().decodeMsg(1001, pb_buffer);
+            var pb_msg = EIGame.ProtocolManager.Instance().decodeMsg(1001, pb_buffer);
             console.log("decode:", pb_msg);
         };
         Test.resList = new Array();

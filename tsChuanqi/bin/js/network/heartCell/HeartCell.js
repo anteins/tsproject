@@ -1,12 +1,24 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var EIGame;
 (function (EIGame) {
-    var HeartCell = (function () {
-        function HeartCell() {
-            this.loseHeartSec = 0;
-            this.heartBeatTime = 3;
-            this.timeout = false;
-            this.need_heartCell = true;
-            this.handleDataStat = function (data) {
+    var HeartBeatManager = (function (_super) {
+        __extends(HeartBeatManager, _super);
+        function HeartBeatManager() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.loseHeartSec = 0;
+            _this.heartBeatTime = 3 * 1000;
+            _this.timeout = false;
+            _this.need_heartCell = true;
+            _this.handleDataStat = function (data) {
                 if (!this.stat) {
                     var dataIndex = 2; //数据索引，因为第一个字节和第二个字节肯定不为数据，所以初始值为2
                     var secondByte = data[1]; //代表masked位和可能是payloadLength位的第二个字节
@@ -49,30 +61,33 @@ var EIGame;
                     this.stat.index = 0;
                 }
             };
+            return _this;
         }
-        HeartCell.Instance = function () {
+        HeartBeatManager.Instance = function () {
             if (this.mInstance == null) {
-                this.mInstance = new HeartCell();
+                this.mInstance = new HeartBeatManager();
             }
             return this.mInstance;
         };
-        HeartCell.prototype.init = function () {
+        HeartBeatManager.prototype.init = function () {
             this.checkHeartBeat();
-            this.ping_packet = EIGame.pbManager.Instance().encodeMsg(1004, {
+            this.ping_packet = EIGame.ProtocolManager.Instance().encodeMsg(1004, {
                 ping: 1,
             });
         };
-        HeartCell.prototype.checkHeartBeat = function () {
+        HeartBeatManager.prototype.checkHeartBeat = function () {
             if (!this.need_heartCell) {
                 console.log("不开启心跳包");
                 return;
             }
             var self = this;
-            var time_ms = self.heartBeatTime * 1000;
+            var time_ms = self.heartBeatTime;
             this.sendCellFunc = setTimeout(function () {
+                if (!EIGame.ei_network.Instance().connected() || !EIGame.ei_network.Instance().IsOnline())
+                    return;
                 if (self.loseHeartSec >= 3) {
                     self.timeout = true;
-                    EIGame.ei_reconnect.Instance().onHeartCellTimeOut();
+                    EIGame.ei_reconnect.Instance().onHeartBeatTimeOut();
                     return;
                 }
                 //记录心跳次数
@@ -83,41 +98,41 @@ var EIGame;
             }, time_ms);
         };
         ;
-        HeartCell.prototype.sendReConnectPakcet = function () {
+        HeartBeatManager.prototype.sendReConnectPakcet = function () {
             var self = this;
         };
-        HeartCell.prototype.IsTimeOut = function () {
+        HeartBeatManager.prototype.IsTimeOut = function () {
             return this.timeout;
         };
-        HeartCell.prototype.receivePong = function () {
+        HeartBeatManager.prototype.receivePong = function () {
             var self = this;
             self.loseHeartSec = 0;
             self.timeout = false;
         };
-        HeartCell.prototype.sendPingPacket = function () {
+        HeartBeatManager.prototype.sendPingPacket = function () {
             if (this.ping_packet) {
                 EIGame.ei_network.Instance().sendPacket(1004, this.ping_packet);
             }
         };
         ;
-        HeartCell.prototype.excutePacket = function (protoId, datas) {
+        HeartBeatManager.prototype.excutePacket = function (protoId, datas) {
             var self = this;
-            // var pb:any = pbManager.Instance().decodeMsg(protoId, datas);
+            // var pb:any = ProtocolManager.Instance().decodeMsg(protoId, datas);
             // console.log("心跳包pb ", pb);
             self.receivePong();
         };
-        HeartCell.prototype.reset = function () {
+        HeartBeatManager.prototype.reset = function () {
             // console.log("重置心跳包");
             var self = this;
             self.loseHeartSec = 0;
             self.timeout = false;
             clearTimeout(this.sendCellFunc);
         };
-        HeartCell.prototype.close = function () {
+        HeartBeatManager.prototype.close = function () {
             this.reset();
         };
-        return HeartCell;
-    }());
-    EIGame.HeartCell = HeartCell;
+        return HeartBeatManager;
+    }(EIGame.EISingleton));
+    EIGame.HeartBeatManager = HeartBeatManager;
 })(EIGame || (EIGame = {}));
 //# sourceMappingURL=HeartCell.js.map

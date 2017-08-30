@@ -39,15 +39,6 @@ var EIGame;
             this.Instance().show();
         };
         LoginMainDlgUI.prototype.initView = function () {
-            // //btn是编辑器界面设定的，代码里面能直接使用，并且有代码提示
-            // this.addActionEvent(this.view.btn_login, laya.events.Event.CLICK, this, this.onLogin);
-            // // this.addActionEvent(this.view.btn_login, laya.events.Event.CLICK, this, this.onLogin2);
-            // this.addActionEvent(this.view.btn_cancel, laya.events.Event.CLICK, this, this.onExit);
-            // this.addActionEvent(this.view.TI_ACCOUNT, laya.events.Event.INPUT, this, this.onAccountInput);
-            // this.addActionEvent(this.view.TI_PASSWORD, laya.events.Event.INPUT, this, this.onPasswordInput);
-            // this.removeActionEvent(this.view.btn_login, laya.events.Event.CLICK, this, this.onLogin);
-            // this.removeActionEvent(this.view.btn_login, laya.events.Event.CLICK, this, ()=>{
-            // });
             this.view.btn_login.on(laya.events.Event.CLICK, this, this.onLoginClick);
             this.view.btn_relogin.on(laya.events.Event.CLICK, this, this.onReLoginClick);
             this.view.btn_cancel.on(laya.events.Event.CLICK, this, this.onExit);
@@ -71,18 +62,12 @@ var EIGame;
             this.exit();
             EIGame.GameSceneUI.show();
         };
-        LoginMainDlgUI.prototype.setAccount = function (text) {
-            this.account = text;
-        };
-        LoginMainDlgUI.prototype.setPassword = function (text) {
-            this.password = text;
-        };
         LoginMainDlgUI.prototype.onAccountInput = function (input) {
-            this.setAccount(input.text);
+            this.account = input.text;
         };
         ;
         LoginMainDlgUI.prototype.onPasswordInput = function (input) {
-            this.setPassword(input.text);
+            this.password = input.text;
         };
         ;
         LoginMainDlgUI.prototype.onExit = function () {
@@ -120,7 +105,7 @@ var EIGame;
             if (isRelogin === void 0) { isRelogin = 0; }
             var self = this;
             var info = self.loginInfo();
-            var buffer = EIGame.pbManager.Instance().encodeMsg(1000, {
+            var buffer = EIGame.ProtocolManager.Instance().encodeMsg(1000, {
                 uid: info["uid"],
                 key: info["key"],
                 frontVersion: info["front_version"],
@@ -148,7 +133,7 @@ var EIGame;
         };
         LoginMainDlgUI.prototype.excutePacket = function (protoId, datas) {
             var self = this;
-            var pb = EIGame.pbManager.Instance().decodeMsg(protoId, datas);
+            var pb = EIGame.ProtocolManager.Instance().decodeMsg(protoId, datas);
             console.log("[login] 登录返回id ", protoId);
             console.log("[login] 登录返回pb: ", pb);
         };

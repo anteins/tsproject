@@ -36,7 +36,7 @@ var EIGame;
             self.initLaya();
             self.initSence();
             self.initLoop();
-            EIGame.pbManager.Instance().init();
+            EIGame.ProtocolManager.Instance().init();
             EIGame.LoginManager.Instance().init();
             self.initPbMessage();
         };
@@ -51,7 +51,7 @@ var EIGame;
                 "demopb.proto",
                 "login.proto"
             ];
-            EIGame.pbManager.Instance().load(protos, function (err, root) {
+            EIGame.ProtocolManager.Instance().load(protos, function (err, root) {
                 console.log("proto loaded! ", err, root);
                 self.pbMessageLoaded = true;
                 self.initNetWork();

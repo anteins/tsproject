@@ -1,24 +1,24 @@
 module EIGame{
-    export class HeartCell{
-        private static mInstance:HeartCell;
+    export class HeartBeatManager extends EIGame.EISingleton{
+        private static mInstance:HeartBeatManager;
         private loseHeartSec = 0;
         private stat;
         private sendCellFunc;
-        private heartBeatTime = 3;
+        private heartBeatTime = 3 * 1000;
         private timeout:boolean=false;
         private need_heartCell:boolean = true;
         private ping_packet:Uint8Array;
 
         static Instance(){
             if(this.mInstance == null){
-                this.mInstance = new HeartCell();
+                this.mInstance = new HeartBeatManager();
             }
             return this.mInstance;
         }
 
         init(){
             this.checkHeartBeat();
-            this.ping_packet = pbManager.Instance().encodeMsg(1004, {
+            this.ping_packet = ProtocolManager.Instance().encodeMsg(1004, {
                 ping:1,
             }); 
         }
@@ -29,11 +29,14 @@ module EIGame{
                 return;
             }
             var self = this;
-            var time_ms = self.heartBeatTime * 1000;
+            var time_ms = self.heartBeatTime;
             this.sendCellFunc = setTimeout(()=> {
+                if(!ei_network.Instance().connected() || !ei_network.Instance().IsOnline())
+                    return;
+
                 if (self.loseHeartSec >= 3) {
                     self.timeout = true;
-                    ei_reconnect.Instance().onHeartCellTimeOut();
+                    ei_reconnect.Instance().onHeartBeatTimeOut();
                     return;
                 }
                 //记录心跳次数
@@ -66,7 +69,7 @@ module EIGame{
 
         excutePacket(protoId:number, datas:Uint8Array){
             let self = this;
-            // var pb:any = pbManager.Instance().decodeMsg(protoId, datas);
+            // var pb:any = ProtocolManager.Instance().decodeMsg(protoId, datas);
             // console.log("心跳包pb ", pb);
             self.receivePong();
         }

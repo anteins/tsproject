@@ -1,21 +1,24 @@
 module EIGame{
-    export class pbManager{
-        public ProtoBuf:any = Browser.window.protobuf;
-        private static mInstance:pbManager;
-        private mRoot;
-        private protoLoadedMap: { [name: string]: any; } = {};
-        private rootpath:string = "../src/network/message/";
-        constructor(){}
-
+    export class ProtocolManager extends EIGame.EISingleton{
+        private static mInstance:ProtocolManager;
+        /**
+         * 获取实例的静态方法实例
+         * @return
+         *
+         */
         public static Instance(){
             if(this.mInstance == null){
-                this.mInstance = new pbManager();
+                this.mInstance = new ProtocolManager();
             }
             return this.mInstance;
         }
 
+        public ProtoBuf:any = Browser.window.protobuf;
+        private mRoot;
+        private protoLoadedMap: { [name: string]: any; } = {};
+        private rootpath:string = "../src/network/message/";
+
         public init(){
-            
         }
 
         load(protoList:Array<string>, cb:any=null){
@@ -46,9 +49,10 @@ module EIGame{
             if(self.mRoot == null)
                 throw Error("mRoot is null.");
 
-            let Message = self.mRoot.lookup(PROTOCOL_ID[protoId]);
+            let msgName = ExcutePacketRoute.Instance().get_msg(protoId);
+            let Message = self.mRoot.lookup(msgName);
             if(!Message)
-                throw Error("no this message '" + PROTOCOL_ID[protoId] + "'");
+                throw Error("no this message '" + msgName + "'");
 
             let msg:any = Message.create(List);
             let errMsg:any = Message.verify(msg);
@@ -65,9 +69,11 @@ module EIGame{
             if(self.mRoot == null){
                 throw Error("mRoot is null.");
             }
-            let pbMessage = self.mRoot.lookup(PROTOCOL_ID[protoId]);
+
+            let msgName = ExcutePacketRoute.Instance().get_msg(protoId);
+            let pbMessage = self.mRoot.lookup(msgName);
             if(!pbMessage){
-                throw Error("no this message '" + PROTOCOL_ID[protoId] + "'");
+                throw Error("no this message '" + msgName + "'");
             }
             pb = pbMessage.decode(buf);
             return pb;
