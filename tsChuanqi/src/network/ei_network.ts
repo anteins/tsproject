@@ -47,7 +47,7 @@ module EIGame{
             var self = this;
             self.eiSocket = new WSConnection();
             self.eiSocket.init();
-            self.eiSocket.connectByUrl(LoginManager.Instance().socket_url);
+            self.eiSocket.connectByUrl(LoginManager.socket_url);
         }
 
         closeConnect(error:any=null):void{

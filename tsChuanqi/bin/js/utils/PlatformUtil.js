@@ -56,13 +56,7 @@ var EIGame;
             }
             return theRequest;
         };
-        PlatformUtil.getResPath = function (resName) {
-            if (resName === void 0) { resName = ""; }
-            return this.resPath + resName;
-        };
-        PlatformUtil.resPath = "../resource/";
         return PlatformUtil;
     }());
     EIGame.PlatformUtil = PlatformUtil;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=PlatformUtil.js.map

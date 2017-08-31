@@ -19,7 +19,7 @@ module EIGame{
         constructor() {
             super();
             this.LoadView("ui.test.Test2dUI", function () {
-                let main_sence = EIGame.GameManager.Instance().mainSence();
+                let main_sence = EIGame.GameManager.Scene();
                 let self = this;
                 self.UIBox = new Laya.Sprite();
                 self.UIBox.cacheAs = "bitmap";

@@ -23,13 +23,13 @@ module EIGame{
         public initView():void {
             var self = this;
             this.view.GAME_BTN_CHANGE.on(laya.events.Event.CLICK, this, ()=>{
-                LoginManager.Instance().changeAccount();
+                LoginManager.changeAccount();
             });
             this.view.GAME_BTN_BREAK.on(laya.events.Event.CLICK, this, ()=>{
-                LoginManager.Instance().breakTest();
+                LoginManager.breakTest();
             });
             this.view.GAME_BTN_EXIT.on(laya.events.Event.CLICK, this, ()=>{
-                ei_network.Instance().close();
+                ei_network.Instance().closeConnect();
             });
         };
 

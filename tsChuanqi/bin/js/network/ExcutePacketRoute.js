@@ -79,10 +79,9 @@ var EIGame;
             EIGame.HeartBeatManager.Instance().excutePacket(protoId, datas);
         };
         ExcutePacketRoute.prototype.excuteTmp = function (protoId, datas) {
-            var pb = EIGame.ProtocolManager.Instance().decodeMsg(protoId, datas);
+            var pb = EIGame.ProtocolManager.decodeMsg(protoId, datas);
         };
         return ExcutePacketRoute;
     }(EIGame.EISingleton));
     EIGame.ExcutePacketRoute = ExcutePacketRoute;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=ExcutePacketRoute.js.map

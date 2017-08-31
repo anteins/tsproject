@@ -50,7 +50,7 @@ var EIGame;
             var self = this;
             self.eiSocket = new EIGame.WSConnection();
             self.eiSocket.init();
-            self.eiSocket.connectByUrl(EIGame.LoginManager.Instance().socket_url);
+            self.eiSocket.connectByUrl(EIGame.LoginManager.socket_url);
         };
         ei_network.prototype.closeConnect = function (error) {
             if (error === void 0) { error = null; }
@@ -230,4 +230,3 @@ var EIGame;
     }(EIGame.EISingleton));
     EIGame.ei_network = ei_network;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=ei_network.js.map

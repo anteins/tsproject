@@ -10,4 +10,3 @@ var EIGame;
     }());
     EIGame.timeUtil = timeUtil;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=timeUtil.js.map

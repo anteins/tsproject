@@ -30,4 +30,3 @@ var EIGame;
     }());
     EIGame.NetworkUtil = NetworkUtil;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=NetworkUtil.js.map

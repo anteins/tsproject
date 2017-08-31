@@ -20,7 +20,7 @@ module EIGame{
                 this.view = this.viewCb();
             }
 
-            GameManager.Instance().mainSence().addChild(this.view);
+            GameManager.Scene().addChild(this.view);
 
             if (!this.isStarted()) {
                 this.mIsStarted = true;
@@ -60,7 +60,7 @@ module EIGame{
         };
         private removeView():void {
             if (this.view) {
-                GameManager.Instance().mainSence().removeChild(this.view);
+                GameManager.Scene().removeChild(this.view);
                 this.view.destroy();
                 this.view = null;
             }

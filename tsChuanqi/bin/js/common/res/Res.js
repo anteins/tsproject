@@ -7,4 +7,3 @@ var EIGame;
     }());
     EIGame.Res = Res;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=Res.js.map

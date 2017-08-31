@@ -16,7 +16,7 @@ var EIGame;
             var _this = _super.call(this) || this;
             _this.uiList = new Array();
             _this.LoadView("ui.test.Test2dUI", function () {
-                var main_sence = EIGame.GameManager.Instance().mainSence();
+                var main_sence = EIGame.GameManager.Scene();
                 var self = this;
                 self.UIBox = new Laya.Sprite();
                 self.UIBox.cacheAs = "bitmap";
@@ -208,4 +208,3 @@ var EIGame;
     }(EIGame.UIPlane));
     EIGame.Test2dUI = Test2dUI;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=Test2dUI.js.map

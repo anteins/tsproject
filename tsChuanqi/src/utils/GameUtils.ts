@@ -1,6 +1,6 @@
 module EIGame{
     export class GameUtils{
-        private static resPath:string = "../resource/";
+        private static resPath:string = "./res/";
 
         public static getUrl(keyList:Array<string>=null):Array<any>
         {

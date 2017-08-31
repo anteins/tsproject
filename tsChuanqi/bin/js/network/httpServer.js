@@ -55,4 +55,3 @@ var EIGame;
     }());
     EIGame.httpServer = httpServer;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=httpServer.js.map

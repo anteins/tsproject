@@ -39,6 +39,19 @@ module ui.test {
 }
 
 module ui.test {
+    export class MainBgUI extends View {
+
+        public static  uiView:any ={"type":"View","props":{"width":1024,"height":640}};
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.createView(ui.test.MainBgUI.uiView);
+        }
+    }
+}
+
+module ui.test {
     export class TestPageUI extends View {
 		public btn:Laya.Button;
 		public clip:Laya.Clip;

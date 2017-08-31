@@ -89,9 +89,8 @@ var EIGame;
             };
             http: f.readAsText(bb);
         };
-        GameUtils.resPath = "../resource/";
+        GameUtils.resPath = "./res/";
         return GameUtils;
     }());
     EIGame.GameUtils = GameUtils;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=GameUtils.js.map

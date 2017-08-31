@@ -71,7 +71,7 @@ var EIGame;
         };
         HeartBeatManager.prototype.init = function () {
             this.checkHeartBeat();
-            this.ping_packet = EIGame.ProtocolManager.Instance().encodeMsg(1004, {
+            this.ping_packet = EIGame.ProtocolManager.encodeMsg(1004, {
                 ping: 1,
             });
         };
@@ -117,7 +117,7 @@ var EIGame;
         ;
         HeartBeatManager.prototype.excutePacket = function (protoId, datas) {
             var self = this;
-            // var pb:any = ProtocolManager.Instance().decodeMsg(protoId, datas);
+            // var pb:any = ProtocolManager.decodeMsg(protoId, datas);
             // console.log("心跳包pb ", pb);
             self.receivePong();
         };
@@ -135,4 +135,3 @@ var EIGame;
     }(EIGame.EISingleton));
     EIGame.HeartBeatManager = HeartBeatManager;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=HeartCell.js.map

@@ -50,22 +50,19 @@ var EIGame;
         ei_reconnect.prototype.break = function () {
         };
         ei_reconnect.prototype.reConnect = function (url) {
-            var self = this;
-            try {
-                EIGame.ei_network.Instance().reConnect(url);
-            }
-            catch (err) {
-                console.log(this.state_tag() + "error ", err);
-                this.onReConnectError();
-            }
+            EIGame.ei_network.Instance().reConnect(url);
         };
-        ei_reconnect.prototype.reConnectFailed = function () {
-            console.log(this.state_tag() + "重连失败");
-            this.try_reconnect_count++;
-            if (this.try_reconnect_count > this.try_reconnect_max_count) {
-                console.log(this.state_tag() + "重连次数已满...");
-                this.toEnd();
-                return;
+        ei_reconnect.prototype.onReConnect = function (result) {
+            if (result == "fail") {
+                console.log(this.state_tag() + "重连失败");
+                this.try_reconnect_count++;
+                if (this.try_reconnect_count > this.try_reconnect_max_count) {
+                    console.log(this.state_tag() + "重连次数已满...");
+                    this.toEnd();
+                }
+            }
+            else if (result == "success") {
+                this.toStart();
             }
         };
         ei_reconnect.prototype.onlineChanged = function (isonline) {
@@ -96,16 +93,11 @@ var EIGame;
         ei_reconnect.prototype.onSocketReConnected = function () {
             if (this.isReconnecting()) {
                 console.log(this.state_tag() + "重连成功");
-                this.toStart();
+                this.onReConnect("success");
             }
             else if (this.isWaitting()) {
                 console.log(this.state_tag() + "低频重连成功");
-                this.toStart();
-            }
-        };
-        ei_reconnect.prototype.onReConnectError = function () {
-            if (this.isReconnecting()) {
-                this.toEnd();
+                this.onReConnect("success");
             }
         };
         //连接异常
@@ -115,7 +107,7 @@ var EIGame;
             if (!this.mInited)
                 return;
             if (this.isReconnecting()) {
-                this.reConnectFailed();
+                this.onReConnect("fail");
                 return;
             }
             //缺少配置不进行重连
@@ -295,4 +287,3 @@ var EIGame;
     }(EIGame.EISingleton));
     EIGame.ei_reconnect = ei_reconnect;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=ei_reconnect.js.map

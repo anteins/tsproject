@@ -1,45 +1,29 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var EIGame;
 (function (EIGame) {
-    var ProtocolManager = (function (_super) {
-        __extends(ProtocolManager, _super);
+    var ProtocolManager = (function () {
         function ProtocolManager() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.ProtoBuf = Browser.window.protobuf;
-            _this.protoLoadedMap = {};
-            _this.rootpath = "../src/network/message/";
-            return _this;
+            this.ProtoBuf = Browser.window.protobuf;
         }
-        /**
-         * 获取实例的静态方法实例
-         * @return
-         *
-         */
-        ProtocolManager.Instance = function () {
-            if (this.mInstance == null) {
-                this.mInstance = new ProtocolManager();
-            }
-            return this.mInstance;
+        ProtocolManager.init = function (next) {
+            var self = this;
+            var files = [
+                "pb.proto",
+                "awesome.proto",
+                "demopb.proto",
+                "login.proto"
+            ];
+            this.load(files, function (err) {
+                next(err);
+            });
         };
-        ProtocolManager.prototype.init = function () {
-        };
-        ProtocolManager.prototype.load = function (protoList, cb) {
+        ProtocolManager.load = function (protoList, cb) {
             if (cb === void 0) { cb = null; }
             for (var i = 0; i < protoList.length; i++) {
                 protoList[i] = this.rootpath + protoList[i];
             }
             this._load(protoList, cb);
         };
-        ProtocolManager.prototype._load = function (protoList, cb) {
+        ProtocolManager._load = function (protoList, cb) {
             if (cb === void 0) { cb = null; }
             var self = this;
             if (Browser.window.protobuf) {
@@ -48,12 +32,12 @@ var EIGame;
                         throw err;
                     self.mRoot = root;
                     if (cb) {
-                        cb(err, root);
+                        cb(err);
                     }
                 });
             }
         };
-        ProtocolManager.prototype.encodeMsg = function (protoId, List) {
+        ProtocolManager.encodeMsg = function (protoId, List) {
             var self = this;
             if (self.mRoot == null)
                 throw Error("mRoot is null.");
@@ -68,7 +52,7 @@ var EIGame;
             var buffer = Message.encode(msg).finish();
             return buffer;
         };
-        ProtocolManager.prototype.decodeMsg = function (protoId, buf) {
+        ProtocolManager.decodeMsg = function (protoId, buf) {
             var self = this;
             var pb = null;
             if (self.mRoot == null) {
@@ -82,11 +66,13 @@ var EIGame;
             pb = pbMessage.decode(buf);
             return pb;
         };
-        ProtocolManager.prototype.getRoot = function () {
+        ProtocolManager.getRoot = function () {
             return this.mRoot;
         };
+        ProtocolManager.protoLoadedMap = {};
+        ProtocolManager.rootpath = "../src/network/message/";
+        ProtocolManager.mIsPreLoad = false;
         return ProtocolManager;
-    }(EIGame.EISingleton));
+    }());
     EIGame.ProtocolManager = ProtocolManager;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=ProtocolManager.js.map

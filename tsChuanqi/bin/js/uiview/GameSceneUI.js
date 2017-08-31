@@ -32,13 +32,13 @@ var EIGame;
         GameSceneUI.prototype.initView = function () {
             var self = this;
             this.view.GAME_BTN_CHANGE.on(laya.events.Event.CLICK, this, function () {
-                EIGame.LoginManager.Instance().changeAccount();
+                EIGame.LoginManager.changeAccount();
             });
             this.view.GAME_BTN_BREAK.on(laya.events.Event.CLICK, this, function () {
-                EIGame.LoginManager.Instance().breakTest();
+                EIGame.LoginManager.breakTest();
             });
             this.view.GAME_BTN_EXIT.on(laya.events.Event.CLICK, this, function () {
-                EIGame.ei_network.Instance().close();
+                EIGame.ei_network.Instance().closeConnect();
             });
         };
         ;
@@ -55,4 +55,3 @@ var EIGame;
     }(EIGame.UIPlane));
     EIGame.GameSceneUI = GameSceneUI;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=GameSceneUI.js.map

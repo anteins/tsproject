@@ -109,7 +109,7 @@ module EIGame{
         }
 
         public static httpTest():void{
-            var p_role_base:any = ProtocolManager.Instance().getRoot().lookup("p_role_base").create({
+            var p_role_base:any = ProtocolManager.getRoot().lookup("p_role_base").create({
                 playerId:1001.0,
                 playerName:"nihao",
                 accountName:"hello",
@@ -124,7 +124,7 @@ module EIGame{
                 lastOfflineTime:1111
             });
 
-            var pb_buffer:any = ProtocolManager.Instance().encodeMsg(1001, {
+            var pb_buffer:any = ProtocolManager.encodeMsg(1001, {
                 apkVersion:"v1.1",
                 queueNum:100,
                 createRole:199,
@@ -135,7 +135,7 @@ module EIGame{
                 sendEnterTag:1111,
             });
 
-            var pb_msg = ProtocolManager.Instance().decodeMsg(1001, pb_buffer);
+            var pb_msg = ProtocolManager.decodeMsg(1001, pb_buffer);
             console.log("decode:", pb_msg);
         }
     }

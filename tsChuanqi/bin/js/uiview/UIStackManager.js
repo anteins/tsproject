@@ -33,4 +33,3 @@ var EIGame;
     }());
     EIGame.UIStackManager = UIStackManager;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=UIStackManager.js.map

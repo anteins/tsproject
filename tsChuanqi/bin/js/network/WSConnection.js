@@ -74,4 +74,3 @@ var EIGame;
     }());
     EIGame.WSConnection = WSConnection;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=WSConnection.js.map

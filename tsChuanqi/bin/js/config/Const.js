@@ -9,4 +9,3 @@ var EIGame;
         10005: "http.timeout"
     };
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=Const.js.map

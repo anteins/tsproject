@@ -12,15 +12,16 @@ var EIGame;
         };
         Reachability.prototype.AddListener = function () {
             if (Laya.Render.isConchApp) {
-                conch.setNetworkEvtFunction(function (type) {
-                    // NET_NO = 0;
-                    // NET_WIFI = 1;
-                    // NET_2G = 2;
-                    // NET_3G = 3;
-                    // NET_4G = 4;
-                    // NET_UNKNOWN=5
-                    alert(type);
-                });
+                // conch.setNetworkEvtFunction(function(type)
+                // {
+                //     // NET_NO = 0;
+                //     // NET_WIFI = 1;
+                //     // NET_2G = 2;
+                //     // NET_3G = 3;
+                //     // NET_4G = 4;
+                //     // NET_UNKNOWN=5
+                //     alert(type);
+                // });
             }
         };
         Reachability.prototype.RemoveListener = function () {
@@ -28,8 +29,8 @@ var EIGame;
         Reachability.prototype.CheckConnectState = function () {
             // console.log("CheckConnectState ");
             if (Laya.Render.isConchApp) {
-                var nType = conch.config.getNetworkType();
-                console.log("网络状态 ", nType);
+                // var nType = conch.config.getNetworkType();
+                // console.log("网络状态 ", nType);
             }
             // var state = _check();
             // if(state){
@@ -55,4 +56,3 @@ var EIGame;
     }());
     EIGame.Reachability = Reachability;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=Reachability.js.map

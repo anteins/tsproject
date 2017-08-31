@@ -22,7 +22,6 @@ var EIGame;
             _this.token = "";
             _this.channel = "channel";
             _this.sub_channel = "sub_channel";
-            _this.manager = EIGame.LoginManager.Instance();
             _this.loginManager = node;
             _this.LoadView("ui.test.LoginMainDlgUI", function () {
                 return new ui.test.LoginMainDlgUI();
@@ -105,7 +104,7 @@ var EIGame;
             if (isRelogin === void 0) { isRelogin = 0; }
             var self = this;
             var info = self.loginInfo();
-            var buffer = EIGame.ProtocolManager.Instance().encodeMsg(1000, {
+            var buffer = EIGame.ProtocolManager.encodeMsg(1000, {
                 uid: info["uid"],
                 key: info["key"],
                 frontVersion: info["front_version"],
@@ -133,7 +132,7 @@ var EIGame;
         };
         LoginMainDlgUI.prototype.excutePacket = function (protoId, datas) {
             var self = this;
-            var pb = EIGame.ProtocolManager.Instance().decodeMsg(protoId, datas);
+            var pb = EIGame.ProtocolManager.decodeMsg(protoId, datas);
             console.log("[login] 登录返回id ", protoId);
             console.log("[login] 登录返回pb: ", pb);
         };
@@ -141,4 +140,3 @@ var EIGame;
     }(EIGame.UIPlane));
     EIGame.LoginMainDlgUI = LoginMainDlgUI;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=LoginMainDlgUI.js.map

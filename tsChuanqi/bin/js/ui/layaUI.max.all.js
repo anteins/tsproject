@@ -50,6 +50,24 @@ var ui;
 (function (ui) {
     var test;
     (function (test) {
+        var MainBgUI = (function (_super) {
+            __extends(MainBgUI, _super);
+            function MainBgUI() {
+                return _super.call(this) || this;
+            }
+            MainBgUI.prototype.createChildren = function () {
+                _super.prototype.createChildren.call(this);
+                this.createView(ui.test.MainBgUI.uiView);
+            };
+            MainBgUI.uiView = { "type": "View", "props": { "width": 1024, "height": 640 } };
+            return MainBgUI;
+        }(View));
+        test.MainBgUI = MainBgUI;
+    })(test = ui.test || (ui.test = {}));
+})(ui || (ui = {}));
+(function (ui) {
+    var test;
+    (function (test) {
         var TestPageUI = (function (_super) {
             __extends(TestPageUI, _super);
             function TestPageUI() {
@@ -65,4 +83,3 @@ var ui;
         test.TestPageUI = TestPageUI;
     })(test = ui.test || (ui.test = {}));
 })(ui || (ui = {}));
-//# sourceMappingURL=layaUI.max.all.js.map

@@ -96,4 +96,3 @@ var EIGame;
     }());
     EIGame.EISingleton = EISingleton;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=EISingleton.js.map

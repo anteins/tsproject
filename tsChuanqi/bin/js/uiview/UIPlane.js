@@ -28,7 +28,7 @@ var EIGame;
             if (!this.view && this.viewCb) {
                 this.view = this.viewCb();
             }
-            EIGame.GameManager.Instance().mainSence().addChild(this.view);
+            EIGame.GameManager.Scene().addChild(this.view);
             if (!this.isStarted()) {
                 this.mIsStarted = true;
                 this.actionListenMap = {};
@@ -72,7 +72,7 @@ var EIGame;
         ;
         UIPlane.prototype.removeView = function () {
             if (this.view) {
-                EIGame.GameManager.Instance().mainSence().removeChild(this.view);
+                EIGame.GameManager.Scene().removeChild(this.view);
                 this.view.destroy();
                 this.view = null;
             }
@@ -131,4 +131,3 @@ var EIGame;
     }(laya.ui.View));
     EIGame.UIPlane = UIPlane;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=UIPlane.js.map

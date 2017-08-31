@@ -23,4 +23,3 @@ var EIGame;
     }());
     EIGame.EIEventQueue = EIEventQueue;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=EIEventQueue.js.map

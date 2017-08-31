@@ -1,34 +1,32 @@
 module EIGame{
-    export class ProtocolManager extends EIGame.EISingleton{
-        private static mInstance:ProtocolManager;
-        /**
-         * 获取实例的静态方法实例
-         * @return
-         *
-         */
-        public static Instance(){
-            if(this.mInstance == null){
-                this.mInstance = new ProtocolManager();
-            }
-            return this.mInstance;
-        }
-
+    export class ProtocolManager{
         public ProtoBuf:any = Browser.window.protobuf;
-        private mRoot;
-        private protoLoadedMap: { [name: string]: any; } = {};
-        private rootpath:string = "../src/network/message/";
+        private static mRoot;
+        private static protoLoadedMap: { [name: string]: any; } = {};
+        private static rootpath:string = "../src/network/message/";
+        static mIsPreLoad = false;
 
-        public init(){
+        static init(next){
+            let self = this;
+            let files = [
+                "pb.proto",
+                "awesome.proto",
+                "demopb.proto",
+                "login.proto"
+            ];
+            this.load(files, (err:any)=>{
+                next(err);
+            });
         }
 
-        load(protoList:Array<string>, cb:any=null){
+        static load(protoList:Array<string>, cb:any=null){
             for(let i=0; i < protoList.length; i++){
                 protoList[i] = this.rootpath + protoList[i];
             }
             this._load(protoList, cb);
         }
 
-        private _load(protoList:any, cb:any=null){
+        private static _load(protoList:any, cb:any=null){
             var self = this;
             if(Browser.window.protobuf){
                 Browser.window.protobuf.load(protoList, function (err:any, root:any){
@@ -38,13 +36,13 @@ module EIGame{
                     self.mRoot = root;
 
                     if(cb){
-                        cb(err, root);
+                        cb(err);
                     }
                 });
             }
         }
 
-        public encodeMsg(protoId:number, List:any):Uint8Array{
+        static encodeMsg(protoId:number, List:any):Uint8Array{
             let self = this;
             if(self.mRoot == null)
                 throw Error("mRoot is null.");
@@ -63,7 +61,7 @@ module EIGame{
             return buffer;
         }
 
-        public decodeMsg(protoId:number, buf:Uint8Array):any{
+        static decodeMsg(protoId:number, buf:Uint8Array):any{
             let self = this;
             let pb = null;
             if(self.mRoot == null){
@@ -79,7 +77,7 @@ module EIGame{
             return pb;
         }
 
-        getRoot(){
+        static getRoot(){
             return this.mRoot;
         }
     }

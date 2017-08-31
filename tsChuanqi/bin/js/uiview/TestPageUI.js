@@ -70,4 +70,3 @@ var EIGame;
     }(EIGame.UIPlane));
     EIGame.TestPageUI = TestPageUI;
 })(EIGame || (EIGame = {}));
-//# sourceMappingURL=TestPageUI.js.map

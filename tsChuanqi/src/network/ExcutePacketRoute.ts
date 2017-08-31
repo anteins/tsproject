@@ -69,7 +69,7 @@ module EIGame{
             HeartBeatManager.Instance().excutePacket(protoId, datas);
         }
         excuteTmp(protoId:number, datas:Uint8Array){
-            var pb:any = ProtocolManager.Instance().decodeMsg(protoId, datas);
+            var pb:any = ProtocolManager.decodeMsg(protoId, datas);
         }
     }
 }

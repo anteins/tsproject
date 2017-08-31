@@ -9,7 +9,6 @@ module EIGame{
         private token:string="";
         private channel:string = "channel";
         private sub_channel:string = "sub_channel";
-        private manager = LoginManager.Instance();
 
         private startLogin
 
@@ -103,7 +102,7 @@ module EIGame{
         sendLoginServer(isRelogin:number = 0){
             let self = this;
             let info = self.loginInfo();
-            var buffer:Uint8Array = ProtocolManager.Instance().encodeMsg(1000, {
+            var buffer:Uint8Array = ProtocolManager.encodeMsg(1000, {
                 uid:info["uid"],
                 key:info["key"],
                 frontVersion:info["front_version"],
@@ -134,7 +133,7 @@ module EIGame{
 
         excutePacket(protoId:number, datas:Uint8Array){
             let self = this;
-            var pb:any = ProtocolManager.Instance().decodeMsg(protoId, datas);
+            var pb:any = ProtocolManager.decodeMsg(protoId, datas);
             console.log("[login] 登录返回id ", protoId);
             console.log("[login] 登录返回pb: ", pb);
         }

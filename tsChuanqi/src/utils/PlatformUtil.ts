@@ -1,6 +1,6 @@
 module EIGame{
     export class PlatformUtil{
-        private static resPath:string = "../resource/";
+        
 
         public static IsPC():boolean{
             var userAgentInfo:string = navigator.userAgent;
@@ -58,8 +58,6 @@ module EIGame{
             return theRequest;
         }
 
-        public static getResPath(resName=""):string{
-            return this.resPath + resName;
-        }
+        
     }
 }
