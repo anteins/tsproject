@@ -3,7 +3,7 @@ module EIGame{
         public ProtoBuf:any = Browser.window.protobuf;
         private static mRoot;
         private static protoLoadedMap: { [name: string]: any; } = {};
-        private static rootpath:string = "../src/network/message/";
+        private static rootpath:string = "./message/";
         static mIsPreLoad = false;
 
         static init(next){
@@ -30,8 +30,10 @@ module EIGame{
             var self = this;
             if(Browser.window.protobuf){
                 Browser.window.protobuf.load(protoList, function (err:any, root:any){
-                    if (err)
+                    if (err){
+                        console.log("pb err ", err);
                         throw err;
+                    }
                     
                     self.mRoot = root;
 

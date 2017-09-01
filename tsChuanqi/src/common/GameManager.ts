@@ -25,6 +25,7 @@ module EIGame{
         static startGame(){
             this.setup(new EIGame.Game());
             this.init();
+            this.mIsGameReady = true;
         }
 
         static isStarted():boolean{

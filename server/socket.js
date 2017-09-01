@@ -15,7 +15,7 @@ var bodyParser = require('body-parser');
 var multer = require('multer'); 
 // Initialize from .proto file
 var mRoot = null;
-var builder = ProtoBuf.load("../tsChuanqi/src/network/message/pb.proto", function(err, root){
+var builder = ProtoBuf.load("../tsChuanqi/bin/message/pb.proto", function(err, root){
     mRoot = root;
 })
 
@@ -56,8 +56,8 @@ var PROTOCOL_ID = {
 }
 
 ltestconfig = {
-    "no_pong":true,
-    "disconnect_after_sec":5,
+    "no_pong":false,
+    "disconnect_after_sec":0,
     "reconnect_after_sec":10,
 }
 

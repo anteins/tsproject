@@ -19,6 +19,7 @@ var EIGame;
         GameManager.startGame = function () {
             this.setup(new EIGame.Game());
             this.init();
+            this.mIsGameReady = true;
         };
         GameManager.isStarted = function () {
             return this.mIsGameReady;

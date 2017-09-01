@@ -103,7 +103,7 @@ module EIGame{
 
                     //文本框---------------
                     let ta = new Laya.TextArea("");
-                    ta.skin = "../resource/ui/textarea.png";
+                    ta.skin = Res.Path("ui/textarea.png");
                     ta.font = "Arial";
                     ta.fontSize = 18;
                     ta.bold = true;

@@ -90,7 +90,7 @@ var EIGame;
                     self.uiList.push(progressBar);
                     //文本框---------------
                     var ta = new Laya.TextArea("");
-                    ta.skin = "../resource/ui/textarea.png";
+                    ta.skin = Res.Path("ui/textarea.png");
                     ta.font = "Arial";
                     ta.fontSize = 18;
                     ta.bold = true;

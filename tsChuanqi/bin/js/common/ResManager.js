@@ -23,16 +23,16 @@ var EIGame;
         //预加载
         ResManager.prototype.loadGameRes = function () {
             console.log("loadGameRes");
-            // Laya.loader.load("../bin/res/django.json", Handler.create(this, this.onJsonLoaded), null, Loader.ATLAS);
+            // Laya.loader.load("./res/django.json", Handler.create(this, this.onJsonLoaded), null, Loader.ATLAS);
             var assets = [
-                "../bin/res/sound/achievement.mp3",
-                "../bin/res/sound/bullet.mp3",
-                "../bin/res/sound/enemy1_down.mp3",
-                "../bin/res/sound/enemy2_down.mp3",
-                "../bin/res/threeDimen/layabox.png",
-                "../bin/res/threeDimen/monkey.png",
-                "../bin/res/threeDimen/ui/button.png",
-                "../bin/res/django.json",
+                "./res/sound/achievement.mp3",
+                "./res/sound/bullet.mp3",
+                "./res/sound/enemy1_down.mp3",
+                "./res/sound/enemy2_down.mp3",
+                "./res/threeDimen/layabox.png",
+                "./res/threeDimen/monkey.png",
+                "./res/threeDimen/ui/button.png",
+                "./res/django.json",
             ];
             // 无加载失败重试
             Laya.loader.retryNum = 0;
@@ -49,8 +49,6 @@ var EIGame;
             console.log("加载结束");
             var json = Laya.loader.getRes("res/django.json");
             console.log("json ", json);
-            var str = JSON.stringify(json);
-            console.log("str ", str);
             this.event(Laya.Event.LOADED);
         };
         // 加载进度侦听器

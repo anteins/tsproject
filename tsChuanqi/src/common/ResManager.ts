@@ -9,17 +9,16 @@ module EIGame{
         //预加载
         loadGameRes(){
             console.log("loadGameRes");
-            // Laya.loader.load("../bin/res/django.json", Handler.create(this, this.onJsonLoaded), null, Loader.ATLAS);
-
+            // Laya.loader.load("./res/django.json", Handler.create(this, this.onJsonLoaded), null, Loader.ATLAS);
             let assets = [
-                "../bin/res/sound/achievement.mp3",
-                "../bin/res/sound/bullet.mp3",
-                "../bin/res/sound/enemy1_down.mp3",
-                "../bin/res/sound/enemy2_down.mp3",
-                "../bin/res/threeDimen/layabox.png",
-                "../bin/res/threeDimen/monkey.png",
-                "../bin/res/threeDimen/ui/button.png",
-                "../bin/res/django.json",
+                "./res/sound/achievement.mp3",
+                "./res/sound/bullet.mp3",
+                "./res/sound/enemy1_down.mp3",
+                "./res/sound/enemy2_down.mp3",
+                "./res/threeDimen/layabox.png",
+                "./res/threeDimen/monkey.png",
+                "./res/threeDimen/ui/button.png",
+                "./res/django.json",
             ];
 
             // 无加载失败重试

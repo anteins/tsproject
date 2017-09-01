@@ -57,14 +57,17 @@ namespace EIGame{
                         {"key":"网络监听", "value":function(){
                             if(!GameManager.isStarted())
                                 return;
-                            // console.log("网络监听 ",conch);
-                            // if( conch )
-                            // {
-                            //     conch.setNetworkEvtFunction(function(type)
-                            //     {
-                            //         alert(type)
-                            //     });
-                            // }
+                            if( conch )
+                            {
+                                
+                                var nType = conch.config.getNetworkType();
+                                alert("conch " + nType);
+                                conch.setNetworkEvtFunction(function(type)
+                                {
+                                    alert(type);
+                                    
+                                });
+                            }
                         }},
                         {"key":"截屏", "value":function(){
                             if(!GameManager.isStarted())

@@ -28,8 +28,10 @@ var EIGame;
             var self = this;
             if (Browser.window.protobuf) {
                 Browser.window.protobuf.load(protoList, function (err, root) {
-                    if (err)
+                    if (err) {
+                        console.log("pb err ", err);
                         throw err;
+                    }
                     self.mRoot = root;
                     if (cb) {
                         cb(err);
@@ -70,7 +72,7 @@ var EIGame;
             return this.mRoot;
         };
         ProtocolManager.protoLoadedMap = {};
-        ProtocolManager.rootpath = "../src/network/message/";
+        ProtocolManager.rootpath = "./message/";
         ProtocolManager.mIsPreLoad = false;
         return ProtocolManager;
     }());
