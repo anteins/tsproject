@@ -10,9 +10,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var EIGame;
 (function (EIGame) {
-    var LoginMainDlgUI = (function (_super) {
-        __extends(LoginMainDlgUI, _super);
-        function LoginMainDlgUI(node) {
+    var View_Login = (function (_super) {
+        __extends(View_Login, _super);
+        function View_Login(node) {
             if (node === void 0) { node = null; }
             var _this = _super.call(this) || this;
             _this.account = "";
@@ -28,16 +28,16 @@ var EIGame;
             });
             return _this;
         }
-        LoginMainDlgUI.Instance = function () {
+        View_Login.Instance = function () {
             if (this.mInstance == null) {
-                this.mInstance = new EIGame.LoginMainDlgUI();
+                this.mInstance = new EIGame.View_Login();
             }
             return this.mInstance;
         };
-        LoginMainDlgUI.show = function () {
+        View_Login.show = function () {
             this.Instance().show();
         };
-        LoginMainDlgUI.prototype.initView = function () {
+        View_Login.prototype.initView = function () {
             this.view.btn_login.on(laya.events.Event.CLICK, this, this.onLoginClick);
             this.view.btn_relogin.on(laya.events.Event.CLICK, this, this.onReLoginClick);
             this.view.btn_cancel.on(laya.events.Event.CLICK, this, this.onExit);
@@ -46,40 +46,40 @@ var EIGame;
             this.view.TI_PASSWORD.type = "password";
         };
         ;
-        LoginMainDlgUI.prototype.onLoginClick = function () {
+        View_Login.prototype.onLoginClick = function () {
             var self = this;
-            var req = LoginMainDlgUI.Instance().sendLoginServer(0);
+            var req = View_Login.Instance().sendLoginServer(0);
             console.log("[login] WS", req);
         };
         ;
-        LoginMainDlgUI.prototype.onReLoginClick = function () {
+        View_Login.prototype.onReLoginClick = function () {
             var self = this;
-            var req = LoginMainDlgUI.Instance().sendLoginServer(1);
+            var req = View_Login.Instance().sendLoginServer(1);
             console.log("[RElogin] WS", req);
         };
-        LoginMainDlgUI.prototype.enterGame = function () {
+        View_Login.prototype.enterGame = function () {
             this.exit();
-            EIGame.GameSceneUI.show();
+            EIGame.View_Game.show();
         };
-        LoginMainDlgUI.prototype.onAccountInput = function (input) {
+        View_Login.prototype.onAccountInput = function (input) {
             this.account = input.text;
         };
         ;
-        LoginMainDlgUI.prototype.onPasswordInput = function (input) {
+        View_Login.prototype.onPasswordInput = function (input) {
             this.password = input.text;
         };
         ;
-        LoginMainDlgUI.prototype.onExit = function () {
+        View_Login.prototype.onExit = function () {
             this.exit();
         };
         ;
-        LoginMainDlgUI.prototype.release = function () {
+        View_Login.prototype.release = function () {
             this.view.btn_login.off(laya.events.Event.CLICK, this, this.onLoginClick);
             this.view.btn_cancel.off(laya.events.Event.CLICK, this, this.onExit);
             this.view.TI_ACCOUNT.off(laya.events.Event.INPUT, this, this.onAccountInput);
             this.view.TI_PASSWORD.off(laya.events.Event.INPUT, this, this.onPasswordInput);
         };
-        LoginMainDlgUI.prototype.loginInfo = function () {
+        View_Login.prototype.loginInfo = function () {
             //测试数据
             var time_mix = EIGame.timeUtil.getTimeStamp();
             var os = EIGame.PlatformUtil.getPlatform();
@@ -100,7 +100,7 @@ var EIGame;
             };
             return info;
         };
-        LoginMainDlgUI.prototype.sendLoginServer = function (isRelogin) {
+        View_Login.prototype.sendLoginServer = function (isRelogin) {
             if (isRelogin === void 0) { isRelogin = 0; }
             var self = this;
             var info = self.loginInfo();
@@ -130,13 +130,13 @@ var EIGame;
             console.log("重连 ", isRelogin);
             EIGame.ei_network.Instance().sendPacket(1000, buffer);
         };
-        LoginMainDlgUI.prototype.excutePacket = function (protoId, datas) {
+        View_Login.prototype.excutePacket = function (protoId, datas) {
             var self = this;
             var pb = EIGame.ProtocolManager.decodeMsg(protoId, datas);
             console.log("[login] 登录返回id ", protoId);
             console.log("[login] 登录返回pb: ", pb);
         };
-        return LoginMainDlgUI;
-    }(EIGame.UIPlane));
-    EIGame.LoginMainDlgUI = LoginMainDlgUI;
+        return View_Login;
+    }(EIGame.ViewManager));
+    EIGame.View_Login = View_Login;
 })(EIGame || (EIGame = {}));

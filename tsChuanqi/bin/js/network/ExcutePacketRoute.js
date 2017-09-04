@@ -73,7 +73,7 @@ var EIGame;
             }
         };
         ExcutePacketRoute.prototype.excuteLoginServer = function (protoId, datas) {
-            EIGame.LoginMainDlgUI.Instance().excutePacket(protoId, datas);
+            EIGame.View_Login.Instance().excutePacket(protoId, datas);
         };
         ExcutePacketRoute.prototype.excuteHeartBeat = function (protoId, datas) {
             EIGame.HeartBeatManager.Instance().excutePacket(protoId, datas);

@@ -1,11 +1,11 @@
 module EIGame{
     export class EIEventQueue{
-        private static mInstance:GameSceneUI;
+        private static mInstance:View_Game;
         private eventList:Array<any>;
 
         public static Instance(){
             if(this.mInstance == null){
-                this.mInstance = new EIGame.GameSceneUI();
+                this.mInstance = new EIGame.View_Game();
             }
             return this.mInstance;
         }

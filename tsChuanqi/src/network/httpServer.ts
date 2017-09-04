@@ -1,7 +1,7 @@
 
 module EIGame{
-    export class httpServer{
-        private static mInstace:httpServer;
+    export class HttpServer{
+        private static mInstace:HttpServer;
         private xhr:Laya.HttpRequest;
         private timeout:number = 10000;
         private header:Array<any> = 
@@ -17,7 +17,7 @@ module EIGame{
 
         public static Instance(){
             if(this.mInstace == null){
-                this.mInstace = new httpServer();
+                this.mInstace = new HttpServer();
             }
             return this.mInstace;
         }

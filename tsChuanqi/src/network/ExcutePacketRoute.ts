@@ -1,7 +1,7 @@
 module EIGame{
     //protocol route
-    export class ExcutePacketRoute extends EIGame.EISingleton{
-        private static mInstance:ExcutePacketRoute;
+    export class ExecutePacketNetRoute extends EIGame.EISingleton{
+        private static mInstance:ExecutePacketNetRoute;
         /**
          * 获取实例的静态方法实例
          * @return
@@ -9,14 +9,14 @@ module EIGame{
          */
         static Instance(){
             if(this.mInstance == null){
-                this.mInstance = new ExcutePacketRoute();
+                this.mInstance = new ExecutePacketNetRoute();
             }
             return this.mInstance;
         }
 
         RouteMap = {
             1000:{
-                "msg":"c2s_auth_key",         
+                "msg":"c2s_auth_key",
                 "excute":null
             },
             1001:{
@@ -61,15 +61,16 @@ module EIGame{
             }
         }
 
+        //----------------------------------------------- execute -----------------------------------------------
         excuteLoginServer(protoId:number, datas:Uint8Array){
-            LoginMainDlgUI.Instance().excutePacket(protoId, datas);
+            View_Login.Instance().excutePacket(protoId, datas);
         }
 
         excuteHeartBeat(protoId:number, datas:Uint8Array){
             HeartBeatManager.Instance().excutePacket(protoId, datas);
         }
         excuteTmp(protoId:number, datas:Uint8Array){
-            var pb:any = ProtocolManager.decodeMsg(protoId, datas);
+            var pb:any = ProtobufHelper.decodeMsg(protoId, datas);
         }
     }
 }

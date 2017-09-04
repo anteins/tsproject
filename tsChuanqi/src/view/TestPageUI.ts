@@ -1,5 +1,5 @@
 module EIGame{
-    export class TestPageUI extends UIPlane{
+    export class TestPageUI extends ViewManager{
         constructor() {
             super();
             //btn是编辑器界面设定的，代码里面能直接使用，并且有代码提示

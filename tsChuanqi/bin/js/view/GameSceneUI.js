@@ -10,9 +10,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var EIGame;
 (function (EIGame) {
-    var GameSceneUI = (function (_super) {
-        __extends(GameSceneUI, _super);
-        function GameSceneUI(node) {
+    var View_Game = (function (_super) {
+        __extends(View_Game, _super);
+        function View_Game(node) {
             if (node === void 0) { node = null; }
             var _this = _super.call(this) || this;
             _this.LoadView("ui.test.GameSceneUI", function () {
@@ -20,16 +20,16 @@ var EIGame;
             });
             return _this;
         }
-        GameSceneUI.Instance = function () {
+        View_Game.Instance = function () {
             if (this.mInstance == null) {
-                this.mInstance = new EIGame.GameSceneUI();
+                this.mInstance = new EIGame.View_Game();
             }
             return this.mInstance;
         };
-        GameSceneUI.show = function () {
+        View_Game.show = function () {
             this.Instance().show();
         };
-        GameSceneUI.prototype.initView = function () {
+        View_Game.prototype.initView = function () {
             var self = this;
             this.view.GAME_BTN_CHANGE.on(laya.events.Event.CLICK, this, function () {
                 EIGame.LoginManager.changeAccount();
@@ -42,16 +42,16 @@ var EIGame;
             });
         };
         ;
-        GameSceneUI.prototype.onLogin = function () {
+        View_Game.prototype.onLogin = function () {
         };
         ;
-        GameSceneUI.prototype.onExit = function () {
+        View_Game.prototype.onExit = function () {
             this.exit();
         };
         ;
-        GameSceneUI.prototype.release = function () {
+        View_Game.prototype.release = function () {
         };
-        return GameSceneUI;
-    }(EIGame.UIPlane));
-    EIGame.GameSceneUI = GameSceneUI;
+        return View_Game;
+    }(EIGame.ViewManager));
+    EIGame.View_Game = View_Game;
 })(EIGame || (EIGame = {}));

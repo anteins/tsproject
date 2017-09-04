@@ -43,16 +43,16 @@ namespace EIGame{
                         {"key":"2D性能测试", "value":function(){
                             if(!GameManager.isStarted())
                                 return;
-                            Test2dUI.show();
+                            View_TEST2D.show();
                         }},
                         {"key":"打开UI", "value":function(){
                             
-                            LoginMainDlgUI.Instance().show();
+                            View_Login.Instance().show();
                         }},
                         {"key":"清空", "value":function(){
                             if(!GameManager.isStarted())
                                 return;
-                            UIStackManager.Instance().removeAllUIPlane();
+                            ViewStackManager.Instance().removeAllUIPlane();
                         }},
                         {"key":"网络监听", "value":function(){
                             if(!GameManager.isStarted())

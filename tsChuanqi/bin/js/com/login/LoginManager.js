@@ -15,9 +15,9 @@ var EIGame;
             }
         };
         LoginManager.changeAccount = function () {
-            EIGame.UIStackManager.Instance().removeAllUIPlane();
+            EIGame.ViewStackManager.Instance().removeAllUIPlane();
             // MainScene.clear();
-            EIGame.LoginMainDlgUI.show();
+            EIGame.View_Login.show();
         };
         LoginManager.breakTest = function () {
         };

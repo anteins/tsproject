@@ -133,7 +133,7 @@ var EIGame;
         };
         ei_network.prototype.say_ai = function () {
             if (this.connected()) {
-                var req = EIGame.LoginMainDlgUI.Instance().sendLoginServer(0);
+                var req = EIGame.View_Login.Instance().sendLoginServer(0);
             }
         };
         ei_network.prototype.pack = function (protoId, buf) {

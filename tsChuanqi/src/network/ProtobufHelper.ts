@@ -1,5 +1,5 @@
 module EIGame{
-    export class ProtocolManager{
+    export class ProtobufHelper{
         public ProtoBuf:any = Browser.window.protobuf;
         private static mRoot;
         private static protoLoadedMap: { [name: string]: any; } = {};
@@ -49,7 +49,7 @@ module EIGame{
             if(self.mRoot == null)
                 throw Error("mRoot is null.");
 
-            let msgName = ExcutePacketRoute.Instance().get_msg(protoId);
+            let msgName = ExecutePacketNetRoute.Instance().get_msg(protoId);
             let Message = self.mRoot.lookup(msgName);
             if(!Message)
                 throw Error("no this message '" + msgName + "'");
@@ -70,7 +70,7 @@ module EIGame{
                 throw Error("mRoot is null.");
             }
 
-            let msgName = ExcutePacketRoute.Instance().get_msg(protoId);
+            let msgName = ExecutePacketNetRoute.Instance().get_msg(protoId);
             let pbMessage = self.mRoot.lookup(msgName);
             if(!pbMessage){
                 throw Error("no this message '" + msgName + "'");

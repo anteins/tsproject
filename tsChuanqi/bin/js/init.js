@@ -1,11 +1,10 @@
-// let args:Array<any> = EIGame.GameUtils.getUrl();
-// if(args && args.length > 0 && args["mode"]){
-//     console.log("args: ", args);
-//     EIGame.GameManager.mode = args["mode"];
-// }
+var args = EIGame.GameUtils.getUrl();
+if (args && args.length > 0 && args["mode"]) {
+    console.log("args: ", args);
+    EIGame.GameManager.mode = args["mode"];
+}
 // Laya.ResourceManager.systemResourceManager.autoRelease = true;//true开启内存管理，，false关闭内存管理
 // Laya.ResourceManager.systemResourceManager.autoReleaseMaxSize =  1024 * 1024 * 60;//1M=1024KB,1KB=1024B//如果开启nei内存管理，内存大小设置
-alert("~~~~");
 if (EIGame.GameManager.mode == "2d") {
     Laya.init(640, 400, Laya.WebGL);
     //设置适配模式
@@ -36,5 +35,3 @@ Res.on(Laya.Event.LOADED, this, function () {
     });
 });
 Res.loadGameRes();
-// var onAssestLoaded = function(){
-// }

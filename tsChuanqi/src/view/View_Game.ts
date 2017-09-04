@@ -1,6 +1,6 @@
 module EIGame{
-    export class GameSceneUI extends UIPlane{
-        private static mInstance:GameSceneUI;
+    export class View_Game extends ViewManager{
+        private static mInstance:View_Game;
 
         constructor(node:any=null) {
             super();
@@ -11,7 +11,7 @@ module EIGame{
 
         public static Instance(){
             if(this.mInstance == null){
-                this.mInstance = new EIGame.GameSceneUI();
+                this.mInstance = new EIGame.View_Game();
             }
             return this.mInstance;
         }

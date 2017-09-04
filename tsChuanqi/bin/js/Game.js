@@ -37,15 +37,15 @@ var EIGame;
                         { "key": "2D性能测试", "value": function () {
                                 if (!EIGame.GameManager.isStarted())
                                     return;
-                                EIGame.Test2dUI.show();
+                                EIGame.View_TEST2D.show();
                             } },
                         { "key": "打开UI", "value": function () {
-                                EIGame.LoginMainDlgUI.Instance().show();
+                                EIGame.View_Login.Instance().show();
                             } },
                         { "key": "清空", "value": function () {
                                 if (!EIGame.GameManager.isStarted())
                                     return;
-                                EIGame.UIStackManager.Instance().removeAllUIPlane();
+                                EIGame.ViewStackManager.Instance().removeAllUIPlane();
                             } },
                         { "key": "网络监听", "value": function () {
                                 if (!EIGame.GameManager.isStarted())

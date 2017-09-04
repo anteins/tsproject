@@ -140,7 +140,7 @@ module EIGame{
 
         say_ai(){
             if(this.connected()){
-                var req = LoginMainDlgUI.Instance().sendLoginServer(0);
+                var req = View_Login.Instance().sendLoginServer(0);
             }
         }
 
@@ -220,12 +220,12 @@ module EIGame{
             protoId = protoId as number;
             datas = datas as Uint8Array;
             //下行入口
-            if(protoId == null || ExcutePacketRoute.Instance().get_msg(protoId) == null){
+            if(protoId == null || ExecutePacketNetRoute.Instance().get_msg(protoId) == null){
                 throw Error("[Error] 缺少协议ID信息 " + protoId);
             }
             let log = new Laya.Byte(message);
             // console.log("[network] excutePacket ", protoId, excutePacket.Instance().get_msg(protoId), log);
-            ExcutePacketRoute.Instance().route(protoId, datas);
+            ExecutePacketNetRoute.Instance().route(protoId, datas);
         }
 
         public packetInt(){

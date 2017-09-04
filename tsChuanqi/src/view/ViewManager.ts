@@ -1,5 +1,5 @@
 module EIGame{
-    export class UIPlane extends laya.ui.View{
+    export class ViewManager extends laya.ui.View{
         public mIsStarted:boolean;
         private uistack = new Array();
         public actionListenMap: { [name: string]: Array<any>; };
@@ -25,7 +25,7 @@ module EIGame{
             if (!this.isStarted()) {
                 this.mIsStarted = true;
                 this.actionListenMap = {};
-                UIStackManager.Instance().push(this);
+                ViewStackManager.Instance().push(this);
                 this.reset();
                 this.init();
                 this.initPos();
@@ -56,7 +56,7 @@ module EIGame{
             this.removeAllEvent();
             this.release();
             this.removeView();
-            UIStackManager.Instance().pop();
+            ViewStackManager.Instance().pop();
         };
         private removeView():void {
             if (this.view) {

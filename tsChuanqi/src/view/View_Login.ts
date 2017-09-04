@@ -1,6 +1,6 @@
 module EIGame{
-    export class LoginMainDlgUI extends UIPlane{
-        private static mInstance:LoginMainDlgUI;
+    export class View_Login extends ViewManager{
+        private static mInstance:View_Login;
         private loginManager:EIGame.LoginManager;
         private account:string="";
         private password:string="";
@@ -22,7 +22,7 @@ module EIGame{
 
         public static Instance(){
             if(this.mInstance == null){
-                this.mInstance = new EIGame.LoginMainDlgUI();
+                this.mInstance = new EIGame.View_Login();
             }
             return this.mInstance;
         }
@@ -43,19 +43,19 @@ module EIGame{
 
         onLoginClick():void {
             var self = this;
-            var req = LoginMainDlgUI.Instance().sendLoginServer(0);
+            var req = View_Login.Instance().sendLoginServer(0);
             console.log("[login] WS", req);
         };
 
         onReLoginClick(){
             var self = this;
-            var req = LoginMainDlgUI.Instance().sendLoginServer(1);
+            var req = View_Login.Instance().sendLoginServer(1);
             console.log("[RElogin] WS", req);
         }
 
         enterGame(){
             this.exit();
-            GameSceneUI.show();
+            View_Game.show();
         }
 
         private onAccountInput(input):void {
@@ -102,7 +102,7 @@ module EIGame{
         sendLoginServer(isRelogin:number = 0){
             let self = this;
             let info = self.loginInfo();
-            var buffer:Uint8Array = ProtocolManager.encodeMsg(1000, {
+            var buffer:Uint8Array = ProtobufHelper.encodeMsg(1000, {
                 uid:info["uid"],
                 key:info["key"],
                 frontVersion:info["front_version"],
@@ -133,7 +133,7 @@ module EIGame{
 
         excutePacket(protoId:number, datas:Uint8Array){
             let self = this;
-            var pb:any = ProtocolManager.decodeMsg(protoId, datas);
+            var pb:any = ProtobufHelper.decodeMsg(protoId, datas);
             console.log("[login] 登录返回id ", protoId);
             console.log("[login] 登录返回pb: ", pb);
         }

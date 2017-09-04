@@ -18,7 +18,7 @@ module EIGame{
 
         init(){
             this.checkHeartBeat();
-            this.ping_packet = ProtocolManager.encodeMsg(1004, {
+            this.ping_packet = ProtobufHelper.encodeMsg(1004, {
                 ping:1,
             }); 
         }
@@ -69,7 +69,7 @@ module EIGame{
 
         excutePacket(protoId:number, datas:Uint8Array){
             let self = this;
-            // var pb:any = ProtocolManager.decodeMsg(protoId, datas);
+            // var pb:any = ProtobufHelper.decodeMsg(protoId, datas);
             // console.log("心跳包pb ", pb);
             self.receivePong();
         }

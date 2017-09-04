@@ -10,21 +10,21 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var EIGame;
 (function (EIGame) {
-    var UIPlane = (function (_super) {
-        __extends(UIPlane, _super);
-        function UIPlane() {
+    var ViewManager = (function (_super) {
+        __extends(ViewManager, _super);
+        function ViewManager() {
             var _this = _super.call(this) || this;
             _this.uistack = new Array();
             _this.viewName = "";
             return _this;
         }
-        UIPlane.prototype.LoadView = function (viewname, viewCb) {
+        ViewManager.prototype.LoadView = function (viewname, viewCb) {
             this.viewName = viewname;
             this.viewCb = viewCb;
             this.view = this.viewCb();
         };
         ;
-        UIPlane.prototype.show = function () {
+        ViewManager.prototype.show = function () {
             if (!this.view && this.viewCb) {
                 this.view = this.viewCb();
             }
@@ -32,7 +32,7 @@ var EIGame;
             if (!this.isStarted()) {
                 this.mIsStarted = true;
                 this.actionListenMap = {};
-                EIGame.UIStackManager.Instance().push(this);
+                EIGame.ViewStackManager.Instance().push(this);
                 this.reset();
                 this.init();
                 this.initPos();
@@ -40,37 +40,37 @@ var EIGame;
             }
         };
         ;
-        UIPlane.prototype.init = function () { };
-        UIPlane.prototype.initPos = function () {
+        ViewManager.prototype.init = function () { };
+        ViewManager.prototype.initPos = function () {
             // 计算将Button至于舞台中心的偏移量
             var xOffset = Laya.stage.width / 2 - this.view.width / 2;
             var yOffset = Laya.stage.height / 2 - this.view.height / 2;
             this.view.pos(xOffset, yOffset);
         };
         ;
-        UIPlane.prototype.initView = function () {
+        ViewManager.prototype.initView = function () {
         };
         ;
-        UIPlane.prototype.update = function () {
+        ViewManager.prototype.update = function () {
         };
         ;
-        UIPlane.prototype.reset = function () {
+        ViewManager.prototype.reset = function () {
         };
         ;
-        UIPlane.prototype.release = function () {
+        ViewManager.prototype.release = function () {
         };
         ;
-        UIPlane.prototype.exit = function () {
+        ViewManager.prototype.exit = function () {
             if (!this.mIsStarted)
                 return;
             this.mIsStarted = false;
             this.removeAllEvent();
             this.release();
             this.removeView();
-            EIGame.UIStackManager.Instance().pop();
+            EIGame.ViewStackManager.Instance().pop();
         };
         ;
-        UIPlane.prototype.removeView = function () {
+        ViewManager.prototype.removeView = function () {
             if (this.view) {
                 EIGame.GameManager.Scene().removeChild(this.view);
                 this.view.destroy();
@@ -78,7 +78,7 @@ var EIGame;
             }
         };
         ;
-        UIPlane.prototype.addActionEvent = function (widget, event, ref, cb) {
+        ViewManager.prototype.addActionEvent = function (widget, event, ref, cb) {
             var obj = {};
             obj["widget"] = widget;
             obj["event"] = event;
@@ -92,7 +92,7 @@ var EIGame;
             console.log("add: ", widget.name, this.actionListenMap[widget.name]);
         };
         ;
-        UIPlane.prototype.removeActionEvent = function (widget, event, ref, cb) {
+        ViewManager.prototype.removeActionEvent = function (widget, event, ref, cb) {
             if (this.actionListenMap[widget.name] != null) {
                 for (var key in this.actionListenMap[widget.name]) {
                     var kv = this.actionListenMap[widget.name][key];
@@ -105,7 +105,7 @@ var EIGame;
             }
         };
         ;
-        UIPlane.prototype.removeAllEvent = function () {
+        ViewManager.prototype.removeAllEvent = function () {
             if (this.actionListenMap) {
                 for (var widget in this.actionListenMap) {
                     var widgetList = this.actionListenMap[widget];
@@ -123,11 +123,11 @@ var EIGame;
             }
         };
         ;
-        UIPlane.prototype.isStarted = function () {
+        ViewManager.prototype.isStarted = function () {
             return this.mIsStarted;
         };
         ;
-        return UIPlane;
+        return ViewManager;
     }(laya.ui.View));
-    EIGame.UIPlane = UIPlane;
+    EIGame.ViewManager = ViewManager;
 })(EIGame || (EIGame = {}));

@@ -19,9 +19,9 @@ module EIGame{
         }
 
         static changeAccount(){
-            UIStackManager.Instance().removeAllUIPlane();
+            ViewStackManager.Instance().removeAllUIPlane();
             // MainScene.clear();
-            LoginMainDlgUI.show();
+            View_Login.show();
         }
 
         static breakTest(){

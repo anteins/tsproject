@@ -67,6 +67,6 @@ var EIGame;
         };
         ;
         return TestPageUI;
-    }(EIGame.UIPlane));
+    }(EIGame.ViewManager));
     EIGame.TestPageUI = TestPageUI;
 })(EIGame || (EIGame = {}));

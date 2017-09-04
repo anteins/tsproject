@@ -1,12 +1,12 @@
 
 module EIGame{
-    export class UIStackManager{
-        private static mInstance:UIStackManager;
+    export class ViewStackManager{
+        private static mInstance:ViewStackManager;
         private uistack:Array<any> = new Array();
 
         public static Instance(){
             if(this.mInstance == null){
-                this.mInstance = new EIGame.UIStackManager();
+                this.mInstance = new EIGame.ViewStackManager();
             }
             return this.mInstance;
         }

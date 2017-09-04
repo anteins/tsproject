@@ -5,7 +5,7 @@ var EIGame;
         }
         EIEventQueue.Instance = function () {
             if (this.mInstance == null) {
-                this.mInstance = new EIGame.GameSceneUI();
+                this.mInstance = new EIGame.View_Game();
             }
             return this.mInstance;
         };
