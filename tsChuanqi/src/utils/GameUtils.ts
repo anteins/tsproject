@@ -2,7 +2,7 @@ module EIGame{
     export class GameUtils{
         private static resPath:string = "./res/";
 
-        public static getUrl(keyList:Array<string>=null):Array<any>
+        public static getUrl():Array<any>
         {
             var url = location.search; //获取url中"?"符后的字串
             var theRequest:Array<any> = new Array();
@@ -76,20 +76,20 @@ module EIGame{
             return out;
         }
 
-        /**
-         * Converts an array buffer to a string
-         *
-         * @param {Uin8} uint8arr | The buffer to convert
-         * @param {Function} callback | The function to call when conversion is complete
-         */
-        static largeuint8ArrToString(uint8arr, callback) {
-            var bb = new Blob([uint8arr]);
-            var f = new FileReader();
-            f.onload = function(e) {
-                callback(e.target.result);
-            };http://ourcodeworld.com/articles/read/164/how-to-convert-an-uint8array-to-string-in-javascript
+        // /**
+        //  * Converts an array buffer to a string
+        //  *
+        //  * @param {Uin8} uint8arr | The buffer to convert
+        //  * @param {Function} callback | The function to call when conversion is complete
+        //  */
+        // static largeuint8ArrToString(uint8arr, callback) {
+        //     var bb = new Blob([uint8arr]);
+        //     var f = new FileReader();
+        //     f.onload = function(e) {
+        //         callback(e.target.result);
+        //     };
             
-            f.readAsText(bb);
-        }
+        //     f.readAsText(bb);
+        // }
     }
 }

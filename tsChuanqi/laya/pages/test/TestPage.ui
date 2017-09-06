@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":2,
+    "selectedBox":1,
+    "selecteID":20,
     "props":{"width":600,"sceneColor":"#ffffff","height":400},
     "nodeParent":-1,
     "label":"View",
@@ -159,7 +159,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":4,"x":563,"skin":"comp/btn_close.png","name":"close"},
+            "props":{"y":4,"x":563,"var":"close","skin":"comp/btn_close.png","name":"close"},
             "nodeParent":1,
             "label":"Button(close)",
             "isDirectory":false,

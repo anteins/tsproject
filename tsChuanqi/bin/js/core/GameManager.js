@@ -1,41 +1,62 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var EIGame;
 (function (EIGame) {
-    var GameManager = (function () {
+    var GameManager = (function (_super) {
+        __extends(GameManager, _super);
         function GameManager() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.loopRate = 1000;
+            _this.mIsGameReady = false;
+            _this.resLoaded = false;
+            _this.pbMessageLoaded = false;
+            return _this;
         }
-        GameManager.init = function () {
+        /**
+         * 获取实例的静态方法实例
+         * @return
+         *
+         */
+        GameManager.Instance = function () {
+            if (this.mInstance == null) {
+                this.mInstance = new GameManager();
+            }
+            return this.mInstance;
+        };
+        GameManager.prototype.init = function () {
             var self = this;
             this.mGame.init();
             setInterval(function () {
                 if (this.mGame != null && this.mIsGameReady == true) {
-                    // ei_network.Instance().say_ai();
+                    // NetWork.Instance().say_ai();
                 }
             }, this.loopRate);
         };
-        GameManager.setup = function (_game_) {
+        GameManager.prototype.setup = function (_game_) {
             this.mGame = _game_;
             return this;
         };
-        GameManager.startGame = function () {
+        GameManager.prototype.startGame = function () {
             this.setup(new EIGame.Game());
             this.init();
             this.mIsGameReady = true;
         };
-        GameManager.isStarted = function () {
+        GameManager.prototype.isGamePlaying = function () {
             return this.mIsGameReady;
         };
-        GameManager.Scene = function () {
-            return this.mGame.scene;
-        };
-        GameManager.exit = function () {
+        GameManager.prototype.exit = function () {
             console.log("游戏退出");
         };
         GameManager.mode = "2d";
-        GameManager.loopRate = 1000;
-        GameManager.mIsGameReady = false;
-        GameManager.resLoaded = false;
-        GameManager.pbMessageLoaded = false;
         return GameManager;
-    }());
+    }(laya.events.EventDispatcher));
     EIGame.GameManager = GameManager;
 })(EIGame || (EIGame = {}));

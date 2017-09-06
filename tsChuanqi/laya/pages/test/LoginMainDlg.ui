@@ -2,7 +2,7 @@
     "x":0,
     "type":"Dialog",
     "selectedBox":1,
-    "selecteID":5,
+    "selecteID":11,
     "props":{"width":640,"sceneColor":"#3399cc","height":320},
     "nodeParent":-1,
     "label":"Dialog",
@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":227,"x":71,"width":138,"var":"btn_login","skin":"linkbutton.png","sizeGrid":"4,4,4,4","name":"btn_login","labelSize":20,"labelAlign":"center","label":"登录","height":45,"cacheAs":"bitmap"},
+            "props":{"y":227,"x":71,"width":138,"var":"btn_login","skin":"comp/button.png","sizeGrid":"4,4,4,4","name":"btn_login","labelSize":20,"labelAlign":"center","label":"登录","height":45,"cacheAs":"bitmap"},
             "nodeParent":1,
             "label":"Button(btn_login)",
             "isDirectory":false,
@@ -41,7 +41,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":228,"x":432,"width":138,"var":"btn_cancel","skin":"linkbutton.png","sizeGrid":"4,4,4,4","name":"btn_cancel","labelSize":20,"labelAlign":"center","label":"返回","height":45,"cacheAs":"bitmap"},
+            "props":{"y":228,"x":432,"width":138,"var":"btn_cancel","skin":"comp/button.png","sizeGrid":"4,4,4,4","name":"btn_cancel","labelSize":20,"labelAlign":"center","label":"返回","height":45,"cacheAs":"bitmap"},
             "nodeParent":1,
             "label":"Button(btn_cancel)",
             "isDirectory":false,
@@ -106,13 +106,26 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":227,"x":252,"width":138,"var":"btn_relogin","skin":"linkbutton.png","sizeGrid":"4,4,4,4","name":"btn_relogin","labelSize":20,"labelAlign":"center","label":"重登","height":45,"cacheAs":"bitmap"},
+            "props":{"y":227,"x":252,"width":138,"var":"btn_relogin","skin":"comp/button.png","sizeGrid":"4,4,4,4","name":"btn_relogin","labelSize":20,"labelAlign":"center","label":"重登","height":45,"cacheAs":"bitmap"},
             "nodeParent":1,
             "label":"Button(btn_relogin)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":10,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"y":5,"x":604,"var":"btn_close","skin":"comp/btn_close.png","name":"btn_close"},
+            "nodeParent":1,
+            "label":"Button(btn_close)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":11,
             "child":[
                 ]
         }],

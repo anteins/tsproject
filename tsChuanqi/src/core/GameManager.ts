@@ -1,42 +1,52 @@
 module EIGame{
-    export class GameManager{
-        private static mGame:EIGame.Game;
-        static mode:String = "2d";
-        private static loopRate:number = 1000;
-        private static mIsGameReady:boolean = false;
-        private static resLoaded:boolean = false;
-        private static pbMessageLoaded:boolean = false;
+    export class GameManager extends laya.events.EventDispatcher{
+        private mGame:EIGame.Game;
+        public static mode:String = "2d";
+        private loopRate:number = 1000;
+        private mIsGameReady:boolean = false;
+        private resLoaded:boolean = false;
+        private pbMessageLoaded:boolean = false;
+        private eventList:{ [name: string]: any; };
 
-        static init(){
+        private static mInstance:GameManager;
+        /**
+         * 获取实例的静态方法实例
+         * @return
+         *
+         */
+        static Instance():GameManager{
+            if(this.mInstance == null){
+                this.mInstance = new GameManager();
+            }
+            return this.mInstance;
+        }
+
+        public init(){
             let self = this;
             this.mGame.init();
             setInterval(function(){
                 if(this.mGame != null && this.mIsGameReady == true){
-                    // ei_network.Instance().say_ai();
+                    // NetWork.Instance().say_ai();
                 }
             }, this.loopRate);
         }
 
-        static setup(_game_){
+        public setup(_game_){
             this.mGame = _game_;
             return this;
         }
 
-        static startGame(){
+        public startGame(){
             this.setup(new EIGame.Game());
             this.init();
             this.mIsGameReady = true;
         }
 
-        static isStarted():boolean{
+        public isGamePlaying():boolean{
             return this.mIsGameReady;
         }
 
-        static Scene(){
-            return this.mGame.scene;
-        }
-
-         static exit(){
+        public exit(){
             console.log("游戏退出");
         }
     }

@@ -3,8 +3,7 @@ var EIGame;
     var GameUtils = (function () {
         function GameUtils() {
         }
-        GameUtils.getUrl = function (keyList) {
-            if (keyList === void 0) { keyList = null; }
+        GameUtils.getUrl = function () {
             var url = location.search; //获取url中"?"符后的字串
             var theRequest = new Array();
             if (url.indexOf("?") != -1) {
@@ -74,20 +73,6 @@ var EIGame;
                 }
             }
             return out;
-        };
-        /**
-         * Converts an array buffer to a string
-         *
-         * @param {Uin8} uint8arr | The buffer to convert
-         * @param {Function} callback | The function to call when conversion is complete
-         */
-        GameUtils.largeuint8ArrToString = function (uint8arr, callback) {
-            var bb = new Blob([uint8arr]);
-            var f = new FileReader();
-            f.onload = function (e) {
-                callback(e.target.result);
-            };
-            http: f.readAsText(bb);
         };
         GameUtils.resPath = "./res/";
         return GameUtils;

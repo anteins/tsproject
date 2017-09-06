@@ -82,7 +82,6 @@ wss.on('connection', function (ws) {
 	}, 1000);
 
     ws.on("close", function(code, message) {
-        console.log(">client close", code, message);
         for(var client of connectionList){
             if(client==ws){
                 break;
@@ -106,8 +105,8 @@ wss.on('connection', function (ws) {
     }
 
 	ws.on('message', function (message) {
-		console.log("----------------------------------------------")
         var [protoId, pbdatas] = unpack(message);
+        console.log("---------------------", protoId, "--------------------------")
         // console.log("onMessage ", protoId, pbdatas);
 
         if(protoId == 1004){
@@ -124,7 +123,6 @@ wss.on('connection', function (ws) {
                 pong:3,
             });
             var req = pack(1006, msg);
-            console.log("sendMessage ", req);
             ws.send(req);
         }
 	});
