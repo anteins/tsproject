@@ -1,9 +1,15 @@
 module EIGame{
+
+    export enum ViewType {
+        View_Login = 1,
+        View_Game,
+        View_Samples,
+        View_TEST2D,
+    }
     export class ViewManager extends laya.ui.View{
         private static mInstance:ViewManager;
         private mViewStack = null;
-        private mCurViewList:{ [name: string]: View_Base; };
-        private mViewList:{ [name: string]: View_Base; };
+        private mViewList:{ [name: number]: View_Base; };
         public rootScene:any = null;
         private mCurView:View_Base = null;
 
@@ -18,30 +24,29 @@ module EIGame{
             super();
             this.mViewStack = new Array();
             this.mViewList = {};
-            this.mCurViewList = {};
             this.rootScene = Laya.stage;
             // Laya.stage = Laya.stage.addChild(new Laya.Sprite()) as Laya.Sprite;
         }
 
-        public addView(viewName:string, viewClazz:any){
-            if(this.mViewList[viewName] == null){
+        public addView(viewType:number, viewClazz:any){
+            if(this.mViewList[viewType] == null){
                 let view = new viewClazz();
-                view.name = viewName;
-                this.mViewList[viewName] = view;
+                view.name = viewType;
+                this.mViewList[viewType] = view;
             }
         }
 
-        public openView(viewName:string){
-            let view:View_Base = this.mViewList[viewName];
+        public openView(viewType:number){
+            let view:View_Base = this.mViewList[viewType];
             if (view != null && !view.isStarted()) {
                 view.init();
-                Laya.stage.addChild(view.mView);
+                Laya.stage.addChild(view.getView());
                 this.mCurView = view;
             }
         }
 
-        public closeView(viewName:string){
-            let view:any = this.mViewList[viewName];
+        public closeView(viewType:number){
+            let view:any = this.mViewList[viewType];
             if (view != null && view.isStarted()) {
                     Laya.stage.removeChild(view.mView);
                     this.mCurView = null;
@@ -64,10 +69,9 @@ module EIGame{
         }
 
         removeAllView(){
-            for(let viewName in this.mViewList){
-                if(this.mViewList[viewName]){
-                    console.log("closeView ", viewName);
-                    this.closeView(viewName);
+            for(let type in this.mViewList){
+                if(this.mViewList[type]){
+                    this.closeView(parseInt(type));
                 }
             }
         }

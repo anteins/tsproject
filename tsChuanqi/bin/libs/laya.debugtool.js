@@ -6869,9 +6869,9 @@
 	*@author ww
 	*/
 	//class laya.debug.tools.UVTools
-	var UVTools1=(function(){
+	var UVTools$1=(function(){
 		function UVTools(){}
-		__class(UVTools,'laya.debug.tools.UVTools',null,'UVTools1');
+		__class(UVTools,'laya.debug.tools.UVTools',null,'UVTools$1');
 		UVTools.getUVByRec=function(x,y,width,height){
 			return [x,y,x+width,y,x+width,y+height,x,y+height];
 		}

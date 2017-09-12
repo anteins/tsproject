@@ -1,6 +1,6 @@
 module EIGame{
     export class View_Base extends laya.display.Node{
-        public mView:any;
+        protected mView:any;
         protected _model:Model_Login;
         public name:string="";
         public mIsStarted:boolean;

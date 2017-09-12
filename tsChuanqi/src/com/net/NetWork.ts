@@ -13,14 +13,13 @@ module EIGame{
             return this.mInstance;
         }
 
-        private eiSocket:WSConnection;
+        private eiSocket:WSConnectionManager;
         private mIsOnline:boolean = true;
         private activeToClose:boolean = false;
         private _time:number = 0;
         private connectTimeOut;
 
         net_endian = Laya.Byte.BIG_ENDIAN;
-        
 
         constructor(){
             super();
@@ -45,7 +44,7 @@ module EIGame{
 
         initConnect():void{
             var self = this;
-            self.eiSocket = new WSConnection();
+            self.eiSocket = new WSConnectionManager();
             self.eiSocket.init();
             self.eiSocket.connectByUrl(LoginManager.socket_url);
         }

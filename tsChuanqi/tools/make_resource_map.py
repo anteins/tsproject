@@ -21,6 +21,10 @@ def createDict(path, root):
 			createDict(path, root[item])
 			path = '\\'.join(path.split('\\')[:-1])
 		else:
+			# log = path + "\\" + item
+			# log = log.split("bin\\")[1]
+			# log = log.replace("\\", "/")
+			# print log
 			root[item] = item
 
 
@@ -38,6 +42,6 @@ def getJson(root):
 
 createDict(path, root)
 fjson = getJson(root)
-fp = open("django.html",'w')
+fp = open("ResourceMap.json",'w')
 fp.write(str(fjson))
 fp.close()

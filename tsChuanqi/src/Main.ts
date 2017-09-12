@@ -26,35 +26,58 @@ namespace EIGame{
             //显示FPS
             Laya.Stat.show(0, 50);
 
-            ResManager.Instance().on(Laya.Event.LOADED, this, this.onLoadComplete);
-            ResManager.Instance().loadGameRes();
+            ResourceManager.Instance().preload(()=>{
+                //初始化进度条
+                let progressView = new Laya.ProgressBar(ResUtils.Get("ui/progressBar.png"));
+                progressView.width = 400;
+                progressView.x = (Laya.stage.width - progressView.width) / 2;
+                progressView.y = Laya.stage.height / 2;
+                progressView.sizeGrid = "5,5,5,5";
+                progressView.value = 0;
+
+                this.start_time = (new Date()).valueOf();
+
+                ResourceManager.Instance().on(Laya.Event.LOADED, this, this.onLoadResComplete);
+                ResourceManager.Instance().loadGameRes("ResourceMap.json", progressView);
+            });
         }
 
-        private onLoadComplete(error:any){
+        private start_time;
+        private onLoadResComplete(error:any){
+            let now_time = (new Date()).valueOf();
+            let cost = (now_time - this.start_time) / 1000;
+            console.log("资源加载耗时 ", cost);
+
             let files = [
                 "pb.proto",
                 "awesome.proto",
                 "demopb.proto",
                 "login.proto"
             ];
-            ProtobufHelper.Instance().on(Laya.Event.LOADED, this, this.onPbComplete);
+            
+            ProtobufHelper.Instance().on(Laya.Event.LOADED, this, this.onProtobufComplete);
             ProtobufHelper.Instance().load(files);
         }
 
-        private onPbComplete(err:any){
-            console.log("all proto loaded~ ");
+        private onProtobufComplete(err:any){
+            
+
             NetWork.Instance().init();
             LoginManager.init();
             this.initViews();
             this.initModels();
-            GameManager.Instance().startGame();
+            Laya.SoundManager.playMusic(ResUtils.Get("sounds/bgm.mp3"), 1, new Handler(this, ()=>{
+                console.log("播放完成");
+            }));
+
+            GameManager.Instance().init();
         }
 
         private initViews(){
-            ViewManager.Instance().addView("View_Login", View_Login);
-            ViewManager.Instance().addView("View_Game", View_Game);
-            ViewManager.Instance().addView("View_TEST2D", View_TEST2D);
-            ViewManager.Instance().addView("View_Samples", View_Samples);
+            ViewManager.Instance().addView(ViewType.View_Login, View_Login);
+            ViewManager.Instance().addView(ViewType.View_Game, View_Game);
+            ViewManager.Instance().addView(ViewType.View_TEST2D, View_TEST2D);
+            ViewManager.Instance().addView(ViewType.View_Samples, View_Samples);
         }
 
         private initModels(){

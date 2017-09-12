@@ -11,8 +11,6 @@ module EIGame{
             this.mView.btn.on(laya.events.Event.CLICK, this, this.onBtnClick);
             this.mView.btn2.on(laya.events.Event.CLICK, this, this.onBtn2Click);
             this.mView.close.on(laya.events.Event.CLICK, this, this.onExit);
-
-            
         };
 
         private onBtnClick(): void {
@@ -55,7 +53,7 @@ module EIGame{
         }
 
         private onExit():void {
-            ViewManager.Instance().closeView("View_Samples");
+            ViewManager.Instance().closeView(ViewType.View_Samples);
         };
     }
 }

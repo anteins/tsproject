@@ -15,7 +15,6 @@ import platformUtil  = EIGame.PlatformUtil;
 namespace EIGame{
     export let DEBUG_MODE = true;
     export class Game{
-        public scene:Laya.Sprite;
         private btnList:Array<any> = new Array();
         private sp;
 
@@ -23,7 +22,7 @@ namespace EIGame{
 
         public init(){
             this.sp = new Laya.Sprite();
-            this.sp.loadImage(ResManager.Instance().Path("logo.png"));
+            this.sp.loadImage(ResUtils.Get("logo.png"));
             ViewManager.Instance().rootScene.addChild(this.sp);
             this.initMainSceneBtn();
         }
@@ -31,7 +30,7 @@ namespace EIGame{
         private initMainSceneBtn():void{
             let btn_w = 90;
             let btn_h = 20;
-            let button_res = ResManager.Instance().Path("threeDimen/ui/button.png");
+            let button_res = ResUtils.Get("threeDimen/ui/button.png");
             let self = this;
             Laya.loader.load([button_res], Laya.Handler.create(null, function () {
                 let buttons;
@@ -40,15 +39,15 @@ namespace EIGame{
                         {"key":"性能测试 UI", "value":function(){
                             if(!GameManager.Instance().isGamePlaying())
                                 return;
-                            ViewManager.Instance().openView("View_TEST2D");
+                            ViewManager.Instance().openView(ViewType.View_TEST2D);
                         }},
                         {"key":"登录 UI", "value":function(){
-                            ViewManager.Instance().openView("View_Login");
+                            ViewManager.Instance().openView(ViewType.View_Login);
                         }},
                         {"key":"sample UI", "value":function(){
                             if(!GameManager.Instance().isGamePlaying())
                                 return;
-                            ViewManager.Instance().openView("View_Samples");
+                            ViewManager.Instance().openView(ViewType.View_Samples);
                         }},
                         {"key":"清空", "value":function(){
                             if(!GameManager.Instance().isGamePlaying())
@@ -58,17 +57,16 @@ namespace EIGame{
                         {"key":"网络监听", "value":function(){
                             if(!GameManager.Instance().isGamePlaying())
                                 return;
-                            // if( conch )
-                            // {
+                            if( conch )
+                            {
                                 
-                            //     var nType = conch.config.getNetworkType();
-                            //     alert("conch " + nType);
-                            //     conch.setNetworkEvtFunction(function(type)
-                            //     {
-                            //         alert(type);
-                                    
-                            //     });
-                            // }
+                                var nType = conch.config.getNetworkType();
+                                alert("conch " + nType);
+                                conch.setNetworkEvtFunction(function(type)
+                                {
+                                    alert(type);
+                                });
+                            }
                         }},
                         {"key":"截屏", "value":function(){
                             if(!GameManager.Instance().isGamePlaying())

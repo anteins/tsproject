@@ -2,8 +2,8 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":2,
-    "props":{"width":1024,"sceneColor":"#000000","height":320},
+    "selecteID":9,
+    "props":{"y":0,"x":0,"width":640,"sceneColor":"#000000","height":320},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":-3,"x":2,"width":1024,"var":"GAME_IMG_BG","skin":"comp/bg.png","name":"GAME_IMG_BG","height":484},
+            "props":{"y":-3,"x":-2,"width":640,"var":"GAME_IMG_BG","skin":"comp/bg.png","pivotX":-1,"name":"GAME_IMG_BG","height":320},
             "nodeParent":1,
             "label":"Image(GAME_IMG_BG)",
             "isDirectory":false,
@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":204,"x":43,"width":217,"var":"GAME_BTN_CHANGE","skin":"comp/button.png","sizeGrid":"4,4,4,4","name":"GAME_BTN_CHANGE","label":"切换账号","height":54},
+            "props":{"y":47,"x":24,"width":107,"var":"GAME_BTN_CHANGE","skin":"comp/button.png","sizeGrid":"4,4,4,4","name":"GAME_BTN_CHANGE","label":"切换账号","height":38},
             "nodeParent":1,
             "label":"Button(GAME_BTN_CHANGE)",
             "isDirectory":false,
@@ -41,7 +41,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":203,"x":378,"width":217,"var":"GAME_BTN_BREAK","skin":"comp/button.png","sizeGrid":"4,4,4,4","name":"GAME_BTN_BREAK","label":"掉线","height":54},
+            "props":{"y":46,"x":260,"width":107,"var":"GAME_BTN_BREAK","skin":"comp/button.png","sizeGrid":"4,4,4,4","name":"GAME_BTN_BREAK","label":"掉线","height":38},
             "nodeParent":1,
             "label":"Button(GAME_BTN_BREAK)",
             "isDirectory":false,
@@ -54,9 +54,9 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":205,"x":743,"width":217,"var":"GAME_BTN_EXIT","skin":"comp/button.png","sizeGrid":"4,4,4,4","name":"GAME_BTN_EXIT","label":"退出游戏","height":54},
+            "props":{"y":46,"x":493,"width":107,"var":"GAME_BTN_EXITGAME","skin":"comp/button.png","sizeGrid":"4,4,4,4","name":"GAME_BTN_EXITGAME","label":"退出游戏","height":38},
             "nodeParent":1,
-            "label":"Button(GAME_BTN_EXIT)",
+            "label":"Button(GAME_BTN_EXITGAME)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
@@ -67,13 +67,52 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":174,"x":979,"var":"GAME_BTN_CLOSE","skin":"comp/btn_close.png","name":"GAME_BTN_CLOSE"},
+            "props":{"y":-3,"x":605,"width":35,"var":"GAME_BTN_CLOSE","skin":"comp/btn_close.png","name":"GAME_BTN_CLOSE","height":25},
             "nodeParent":1,
             "label":"Button(GAME_BTN_CLOSE)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":6,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":101,"x":29,"width":77,"var":"GAME_IMG_ICEMAN","skin":"comp/cartoon2/yd-2_01.png","sizeGrid":"4,4,4,4","height":77},
+            "nodeParent":1,
+            "label":"Image(GAME_IMG_ICEMAN)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":7,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"List",
+            "props":{"y":111,"x":122,"width":474,"height":100},
+            "nodeParent":1,
+            "label":"List",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":8,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"y":-3,"x":562,"width":35,"var":"GAME_BTN_AUDIO","skin":"comp/ui/hscroll$down.png","name":"GAME_BTN_AUDIO","height":25},
+            "nodeParent":1,
+            "label":"Button(GAME_BTN_AUDIO)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":9,
             "child":[
                 ]
         }],

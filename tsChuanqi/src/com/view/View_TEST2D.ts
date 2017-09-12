@@ -45,16 +45,16 @@ module EIGame{
             for(var i=0;i<4;i++){
                 let ape = new Laya.Sprite();
                 ape = UIBox.addChild(ape);
-                ape.loadImage(ResManager.Instance().Path("apes/monkey"+i+".png"));
+                ape.loadImage(ResUtils.Get("apes/monkey"+i+".png"));
                 ape.x = ape.x + _offsetX * i;
                 _right = ape.x;
                 self.uiList.push(ape);
             }
 
             // 方法2：使用drawTexture
-            Laya.loader.load(ResManager.Instance().Path("apes/monkey2.png"), Laya.Handler.create(this, function()
+            Laya.loader.load(ResUtils.Get("apes/monkey2.png"), Laya.Handler.create(this, function()
             {
-                let t = Laya.loader.getRes(ResManager.Instance().Path("apes/monkey2.png"));
+                let t = Laya.loader.getRes(ResUtils.Get("apes/monkey2.png"));
                 let ape2 = new Laya.Sprite();
                 ape2.graphics.drawTexture(t, 0, 0);
                 ape2 = UIBox.addChild(ape2);
@@ -77,13 +77,13 @@ module EIGame{
             ];
 
             for(let i in res){
-                res[i] = ResManager.Instance().Path(res[i]);
+                res[i] = ResUtils.Get(res[i]);
             }
             
             Laya.loader.load(res, Laya.Handler.create(this, function ()
             {
                 //进度条
-                let progressBar = new Laya.ProgressBar(ResManager.Instance().Path("ui/progressBar.png"));
+                let progressBar = new Laya.ProgressBar(ResUtils.Get("ui/progressBar.png"));
                 console.log("进度条: ", self);
                 progressBar.width = ViewManager.Instance().rootScene.width;
                 progressBar.x = 0;
@@ -100,7 +100,7 @@ module EIGame{
 
                 //文本框---------------
                 let ta = new Laya.TextArea("");
-                ta.skin = ResManager.Instance().Path("ui/textarea.png");
+                ta.skin = ResUtils.Get("ui/textarea.png");
                 ta.font = "Arial";
                 ta.fontSize = 18;
                 ta.bold = true;
@@ -114,10 +114,10 @@ module EIGame{
 
                 //拖动
                 let ape = new Laya.Sprite();
-                ape.loadImage(ResManager.Instance().Path("apes/monkey2.png"));
+                ape.loadImage(ResUtils.Get("apes/monkey2.png"));
                 UIBox.addChild(ape);
 
-                let texture = Laya.loader.getRes(ResManager.Instance().Path("apes/monkey2.png"));
+                let texture = Laya.loader.getRes(ResUtils.Get("apes/monkey2.png"));
                 ape.pivot(texture.width / 2, texture.height / 2);
                 ape.x = Laya.stage.width / 2;
                 ape.y = Laya.stage.height / 2;
@@ -189,7 +189,7 @@ module EIGame{
 
             //等角地图
             let tiledMap = new Laya.TiledMap();
-            tiledMap.createMap(ResManager.Instance().Path("tiledMap/isometric_grass_and_water.json"), new Laya.Rectangle(0, 0, Laya.stage.width, Laya.stage.height), Handler.create(this, function ()
+            tiledMap.createMap(ResUtils.Get("tiledMap/isometric_grass_and_water.json"), new Laya.Rectangle(0, 0, Laya.stage.width, Laya.stage.height), Handler.create(this, function ()
             {
                 let layer = tiledMap.getLayerByIndex(0);
                 let radiusX = 32;

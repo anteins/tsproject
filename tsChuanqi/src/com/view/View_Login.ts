@@ -14,7 +14,7 @@ module EIGame{
             this.mView.btn_relogin.on(laya.events.Event.CLICK, this, this.onReLoginClick);
             this.mView.btn_cancel.on(laya.events.Event.CLICK, this, this.onExit);
             this.mView.btn_close.on(laya.events.Event.CLICK, this, ()=>{
-                ViewManager.Instance().closeView("View_Login");
+                ViewManager.Instance().closeView(ViewType.View_Login);
             });
             this.mView.TI_ACCOUNT.on(laya.events.Event.INPUT, this, this.onAccountInput);
             this.mView.TI_PASSWORD.on(laya.events.Event.INPUT, this, this.onPasswordInput);
@@ -33,8 +33,8 @@ module EIGame{
         }
 
         enterGame(){
-            ViewManager.Instance().closeView("View_Login");
-            ViewManager.Instance().openView("View_Game");
+            ViewManager.Instance().closeView(ViewType.View_Login);
+            ViewManager.Instance().openView(ViewType.View_Game);
         }
 
         loginFailed(){
@@ -50,7 +50,7 @@ module EIGame{
         };
 
         private onExit():void {
-            ViewManager.Instance().closeView("View_Login");
+            ViewManager.Instance().closeView(ViewType.View_Login);
         };
 
         release(){
